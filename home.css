@@ -1,0 +1,36 @@
+@CHARSET "ISO-8859-1";
+
+#mobile,#monitor,#wrap,#addtomonitor,#addtomobile {
+	border-style: solid;
+	border-width: 1px;
+}
+
+#addtomonitor {
+	margin: 2% 5% 5% 5%;
+	position: absolute;
+	left: 30%;
+	width: 10%;
+}
+
+#addtomobile {
+	margin: 2% 5% 5% 5%;
+	position: absolute;
+	width:10%;
+}
+#wrap {
+	position: absolute;
+	width: 99%;
+}
+
+#mobile {
+	margin: 5%;
+	width: 20%;
+}
+
+#monitor {
+	margin: 5%;
+	position: absolute;
+	top: 0%;
+	left: 30%;
+	width: 50%;
+}
