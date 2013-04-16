@@ -1,36 +1,32 @@
-@CHARSET "ISO-8859-1";
-
-#mobile,#monitor,#wrap,#addtomonitor,#addtomobile {
+#mobile,#monitor,#wrap,#add{
 	border-style: solid;
 	border-width: 1px;
 }
 
-#addtomonitor {
-	margin: 2% 5% 5% 5%;
-	position: absolute;
-	left: 30%;
-	width: 10%;
-}
 
-#addtomobile {
-	margin: 2% 5% 5% 5%;
+#add{
+	margin: 25.2px 63px 63px 63px;
 	position: absolute;
-	width:10%;
+	width:126px;
 }
 #wrap {
 	position: absolute;
-	width: 99%;
+	width: 1200px;
+	margin: 20px;
 }
 
 #mobile {
-	margin: 5%;
-	width: 20%;
+	margin: 63px;
+	width: 152px;
 }
 
 #monitor {
-	margin: 5%;
+	margin: 63px;
 	position: absolute;
 	top: 0%;
-	left: 30%;
-	width: 50%;
+	left: 378px;
+	width: 630px;
 }
+
+5 ----- 63
+99 ------
