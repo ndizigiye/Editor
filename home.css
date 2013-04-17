@@ -3,30 +3,28 @@
 	border-width: 1px;
 }
 
-
-#add{
-	margin: 25.2px 63px 63px 63px;
-	position: absolute;
-	width:126px;
-}
 #wrap {
 	position: absolute;
 	width: 1200px;
 	margin: 20px;
 }
 
+#add{
+	margin: 25.2px 63px 63px 63px;
+	position: absolute;
+	width:1008px;
+	padding: 0px 10px 0px 10px;
+}
+
 #mobile {
-	margin: 63px;
+	margin: 130px 63px 63px 63px;
 	width: 152px;
 }
 
 #monitor {
-	margin: 63px;
+	margin: 130px 63px 63px 63px;
 	position: absolute;
 	top: 0%;
 	left: 378px;
 	width: 630px;
 }
-
-5 ----- 63
-99 ------
