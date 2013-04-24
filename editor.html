@@ -1,0 +1,57 @@
+<html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://localhost:8080/lib/user.js"></script>
+<script src="http://localhost:8080/lib/html.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
+<link rel="stylesheet" type="text/css" href="home.css">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<script>
+	var socket = io.connect("http://" + window.location.host + "/");
+	var gameid = "";
+
+	function initiate() {
+		var param = window.location.search.replace("?", "");
+		param = param.split("=");
+		gameid = param[1];
+		var mobile_url = "http://" + window.location.host + "/Games/" + gameid
+				+ "/index.html";
+		var monitor_url = "http://" + window.location.host + "/Games/" + gameid
+				+ "/monitor.html";
+
+		if (gameid != null) {
+			$('#mobile').attr("src", mobile_url);
+			$('#monitor').attr("src", monitor_url);
+		}
+	}
+	
+	function save(){
+		var html = $("#mobile").contents().find("html").html();
+		var path = './Games/'+gameid+'/index.html';
+		socket.emit("save",path,html);
+	}
+	
+</script>
+<body onload="initiate()">
+	<div id="wrap">
+		<div id="add">
+			<img src="http://localhost:8080/img/button.png" /> <img
+				src="http://localhost:8080/img/image.png" /> <img
+				src="http://localhost:8080/img/text.png" /> <img
+				src="http://localhost:8080/img/vimeo.png" /> <img
+				src="http://localhost:8080/img/youtube.png" />
+		</div>
+		<iframe id="mobile" src=""></iframe>
+		<iframe id="monitor" src=""></iframe>
+		<button onclick ="save()">Opslaan</button>
+	</div>
+</body>
+</html>
