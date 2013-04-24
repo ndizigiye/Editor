@@ -39,11 +39,16 @@
 		socket.emit("save",path,html);
 	}
 	
+	function add(element){
+		var html = new Html();
+		var button = html.addButton('Test','youtube','https://www.youtube.com/watch?v=f_SnZubaArM');
+		$('#mobile').contents().find('body').append(button);
+	}
 </script>
 <body onload="initiate()">
 	<div id="wrap">
 		<div id="add">
-			<img src="http://localhost:8080/img/button.png" /> <img
+			<img onclick="add('button')" src="http://localhost:8080/img/button.png" /> <img
 				src="http://localhost:8080/img/image.png" /> <img
 				src="http://localhost:8080/img/text.png" /> <img
 				src="http://localhost:8080/img/vimeo.png" /> <img
