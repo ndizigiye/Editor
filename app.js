@@ -32,8 +32,8 @@ function makeDir(path){
 
 io.sockets.on('connection', function(socket) {
 
-    socket.on('open', function(msg){
-        socket.broadcast.emit('open',msg);
+    socket.on('open', function(type,data){
+        socket.broadcast.emit('open',type,data);
     });
     
     socket.on('game', function(id){
