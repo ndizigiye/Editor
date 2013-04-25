@@ -43,6 +43,7 @@
 		var html = new Html();
 		var button = html.addButton('Test','youtube','https://www.youtube.com/watch?v=f_SnZubaArM');
 		$('#mobile').contents().find('body').append(button);
+		alert($("#mobile").contents().find("html").html());
 	}
 </script>
 <body onload="initiate()">

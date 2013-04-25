@@ -30,8 +30,8 @@ function makeDir(path){
 	});
 }
 
-io.sockets.on('connection', function(socket) {
 
+io.sockets.on('connection', function(socket) {
     socket.on('open', function(type,data){
         socket.broadcast.emit('open',type,data);
     });
@@ -57,6 +57,12 @@ io.sockets.on('connection', function(socket) {
     socket.on('save',function(path,html){
     	writeFile(path, html);
     	console.log(path+ " ..."+html);
+    });
+    
+    socket.on('search', function(games){
+    	var dir = fs.readdirSync('./Games');
+    	console.log("Found"+ dir);
+    	games(dir);
     });
 
 	socket.on('disconnect', function() {
