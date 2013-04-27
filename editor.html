@@ -4,10 +4,6 @@
 <script src="http://localhost:8080/lib/html.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="home.css">
@@ -20,6 +16,7 @@
 <script>
 	var socket = io.connect("http://" + window.location.host + "/");
 	var gameid = "";
+	var buttonid = 0;
 
 	function initiate() {
 		var param = window.location.search.replace("?", "");
@@ -44,23 +41,37 @@
 
 	function add(element) {
 		var html = new Html();
-		var button = html.addButton('Test', 'youtube',
+		var name = "button" + buttonid;
+		var button = html.addButton(name, 'youtube',
 				'https://www.youtube.com/watch?v=f_SnZubaArM');
 		$('#mobile').contents().find('body').append(button);
 		alert($("#mobile").contents().find("html").html());
+		save();
+		buttonid++; //slordig
 	}
 
-	function edit(id, title, content) {
+	function edit() {
+		
+		var id = $("#id").val();
+		var title = $("#name").val();
+		var content = $("#content").val();
 
 		$('#mobile').contents().find("#" + id).attr("onclick",
 				"emitter('youtube','" + content + "')");
 		$('#mobile').contents().find("#" + id).html(title);
-		alert(id + title + content);
+		save();
 	}
+	
 	$(document).ready(function() {
-		var frame = $('#mobile').get(0).contentDocument;
-		$("#Test", frame).click(function(event) {
-			alert("clicked");
+		$("#mobile").load(function() {
+			buttonid = $("#mobile").contents().find("button").size()+1;
+		 $("#mobile").contents().find("button").bind("contextmenu",function(e){
+	        e.preventDefault();
+	        var name = $(this.id).html();
+	        $("#id").attr("value",this.id);
+	        $("#name").attr("value",name);
+	        $("#edit" ).dialog();
+	      });
 		});
 	});
 </script>
@@ -76,21 +87,14 @@
 				src="http://localhost:8080/img/youtube.png" />
 		</div>
 		<iframe id="mobile" src=""></iframe>
-		<script>
-			$(document).ready(function() {
-				$('#mobile').contents().click(function() {
-					alert('test');
-				});
-			});
-		</script>
 		<iframe id="monitor" src=""></iframe>
-		<button onclick="save()">Opslaan</button>
 	</div>
-	<!--  <div id="edit">
-	 	Name: <input type="text" name="name"><br>
-  		Type: <input type="text" name="type"><br>
-    	Content: <input type="text" name="content"><br>
+	<div id="edit" style="display:none" title="properties">
+		<p style = "display:none"><input type="text" id="id" name="id"><br></p>
+	 	Name: <input type="text" id="name" name="name"><br>
+  		Type: <input type="text" id="type" name="type"><br>
+    	Content: <input type="text" id="content" name="content"><br>
   	    <button onclick="edit()">Opslaan</button>
-	</div> -->
+	</div>
 </body>
 </html>

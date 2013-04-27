@@ -7,6 +7,7 @@
 	position: absolute;
 	width: 1200px;
 	margin: 20px;
+	height: 800px;
 }
 
 #add{
@@ -27,4 +28,5 @@
 	top: 0%;
 	left: 378px;
 	width: 630px;
+	height: 600px;
 }
