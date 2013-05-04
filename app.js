@@ -30,6 +30,15 @@ function makeDir(path){
 	});
 }
 
+function removeDir(path){
+	var files = fs.readdirSync(path);
+	for (var i in files ){
+		fs.unlinkSync(path+"/"+files[i]);
+	}
+	fs.rmdirSync(path);
+	console.log('directory '+path+' deleted');
+}
+
 
 io.sockets.on('connection', function(socket) {
     socket.on('open', function(type,data){
@@ -57,6 +66,10 @@ io.sockets.on('connection', function(socket) {
     socket.on('save',function(path,html){
     	writeFile(path, html);
     	console.log(path+ " ..."+html);
+    });
+    
+    socket.on('delete game',function(path){
+    	removeDir(path);
     });
     
     socket.on('search', function(games){

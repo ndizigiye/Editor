@@ -22,6 +22,18 @@ function Game(){
 	window.location.href = "http://" +window.location.host + "/editor.html"+"?gameid="+game;
 }
 
+function verwijder(id){
+	var dir = './Games/'+id;
+	socket.emit('delete game',dir);
+	$("#"+id).remove();
+	console.log(id);
+}
+
+function verwijderbutton(id){
+	$("#"+id).remove();
+	console.log(id);
+}
+
 function redirect(game){
 	window.location.href = "http://" +window.location.host + "/editor.html"+"?gameid="+game;
 }
@@ -29,8 +41,9 @@ function redirect(game){
 function searchGames(){
 	socket.emit('search', function (games){
 	for (var i in games){
-	var html = '<button onclick="redirect(\''+games[i]+'\')" class="ui-btn-hidden" data-disabled="false">'+games[i]+'</button><br>';
-	$("body").append(html);
+	var html = '<button id="'+games[i]+'" onclick="redirect(\''+games[i]+'\')" class="ui-btn-hidden" data-disabled="false">'+games[i]+'</button>';
+	var deletebutton = '<button id="'+games[i]+"del"+'" onclick="verwijder(\''+games[i]+'\');verwijderbutton(\''+games[i]+"del"+'\');">Delete</button><br>';
+	$("body").append(html+deletebutton);
 	}
 	});
 }

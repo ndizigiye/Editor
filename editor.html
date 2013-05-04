@@ -1,6 +1,7 @@
 <html>
 <script src="/socket.io/socket.io.js"></script>
 <script src="http://localhost:8080/lib/user.js"></script>
+<script src="http://localhost:8080/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="http://localhost:8080/lib/html.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -14,6 +15,16 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 <script>
+tinymce.init({
+    selector: "textarea",
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"
+    ],
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+
 	var socket = io.connect("http://" + window.location.host + "/");
 	var gameid = "";
 	var buttonid = 0;
@@ -74,6 +85,10 @@
 	      });
 		});
 	});
+	
+	function shows(){
+		alert(tinyMCE.activeEditor.getContent());
+	}
 </script>
 <body onload="initiate()">
 	<div id="wrap">
@@ -96,5 +111,9 @@
     	Content: <input type="text" id="content" name="content"><br>
   	    <button onclick="edit()">Opslaan</button>
 	</div>
+	<form method="post" action="somepage">
+    <textarea name="content" style="width:100%"></textarea>
+</form>
+<button onclick="shows()">Show</button>
 </body>
 </html>
