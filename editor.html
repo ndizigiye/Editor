@@ -27,15 +27,16 @@ tinymce.init({
 
 	var socket = io.connect("http://" + window.location.host + "/");
 	var gameid = "";
-	var buttonid = 0;
+	var mobile_url = "";
+	var monitor_url = "";
 
 	function initiate() {
 		var param = window.location.search.replace("?", "");
 		param = param.split("=");
 		gameid = param[1];
-		var mobile_url = "http://" + window.location.host + "/Games/" + gameid
+		mobile_url = "http://" + window.location.host + "/Games/" + gameid
 				+ "/index.html";
-		var monitor_url = "http://" + window.location.host + "/Games/" + gameid
+		monitor_url = "http://" + window.location.host + "/Games/" + gameid
 				+ "/monitor.html";
 
 		if (gameid != null) {
@@ -52,13 +53,13 @@ tinymce.init({
 
 	function add(element) {
 		var html = new Html();
+		var buttonid = $("#mobile").contents().find(".buttons").size()+1;
 		var name = "button" + buttonid;
 		var button = html.addButton(name, 'youtube',
 				'https://www.youtube.com/watch?v=f_SnZubaArM');
 		$('#mobile').contents().find('body').append(button);
-		alert($("#mobile").contents().find("html").html());
 		save();
-		buttonid++; //slordig
+		$('#mobile').load(location.href + ' #mobile');
 	}
 
 	function edit() {
@@ -75,14 +76,19 @@ tinymce.init({
 	
 	$(document).ready(function() {
 		$("#mobile").load(function() {
-			buttonid = $("#mobile").contents().find("button").size()+1;
-		 $("#mobile").contents().find("button").bind("contextmenu",function(e){
+		 $("#mobile").contents().find(".buttons").bind("contextmenu",function(e){
 	        e.preventDefault();
 	        var name = $(this.id).html();
 	        $("#id").attr("value",this.id);
 	        $("#name").attr("value",name);
+	        $("#content").html("<p>test</p>");
 	        $("#edit" ).dialog();
 	      });
+		 $("#mobile").contents().find(".delete").bind("click",function(e){
+			 $(this).prev().remove();
+			 $(this).remove();
+			 save();
+		      });
 		});
 	});
 	
@@ -108,12 +114,10 @@ tinymce.init({
 		<p style = "display:none"><input type="text" id="id" name="id"><br></p>
 	 	Name: <input type="text" id="name" name="name"><br>
   		Type: <input type="text" id="type" name="type"><br>
-    	Content: <input type="text" id="content" name="content"><br>
+    	Content: <input type="text" id="content" name="url"><br>
+    	<div><textarea name="content" id="r" style="width:100%"></textarea></div>
   	    <button onclick="edit()">Opslaan</button>
 	</div>
-	<form method="post" action="somepage">
-    <textarea name="content" style="width:100%"></textarea>
-</form>
 <button onclick="shows()">Show</button>
 </body>
 </html>
