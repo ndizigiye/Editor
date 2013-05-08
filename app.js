@@ -33,7 +33,7 @@ function makeDir(path){
 function removeDir(path){
 	var files = fs.readdirSync(path);
 	for (var i in files ){
-		fs.unlinkSync(path+"/	"+files[i]);
+		fs.unlinkSync(path+"/"+files[i]);
 	}
 	fs.rmdirSync(path);
 	console.log('directory '+path+' deleted');

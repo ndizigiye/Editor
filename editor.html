@@ -68,6 +68,56 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 <script>
+YAHOO.namespace("example.container");
+
+$(document).ready(
+		function() {
+
+			var myEditor = new YAHOO.widget.Editor('msgpost', {
+				width : "30em",
+				dompath : true, //Turns on the bar at the bottom
+				animate : true
+			//Animates the opening, closing and moving of Editor windows
+			});
+			myEditor.render();
+
+			// Define various event handlers for Dialog
+			var handleSubmit = function() {
+				this.submit();
+			};
+			var handleCancel = function() {
+				this.cancel();
+			};
+			var handleSuccess = function(o) {
+				var response = o.responseText;
+				response = response.split("<!")[0];
+				document.getElementById("resp").innerHTML = response;
+			};
+			var handleFailure = function(o) {
+				alert("Submission failed: " + o.status);
+			};
+
+			// Instantiate the Dialog
+			YAHOO.example.container.dialog1 = new YAHOO.widget.Dialog(
+					"dialog1", {
+						width : "70em",
+						fixedcenter : true,
+						visible : false,
+						constraintoviewport : true,
+						buttons : [ {
+							text : "Submit",
+							handler : handleSubmit,
+							isDefault : true
+						}, {
+							text : "Cancel",
+							handler : handleCancel
+						} ]
+					});
+
+			// Render the Dialog
+			YAHOO.example.container.dialog1.render();
+		});
+		
 	var myEditor = new YAHOO.widget.Editor('msgbox', {
 		height : '300px',
 		width : '522px',
@@ -171,9 +221,7 @@
 										var name = $(this.id).html();
 										$("#id").attr("value", this.id);
 										$("#name").attr("value", name);
-										$("#edit").dialog("resize", "auto");
-										$("#edit").dialog();
-										myDialog.show();
+										YAHOO.example.container.dialog1.show();
 									});
 							$("#mobile").contents().find(".delete").bind(
 									"click", function(e) {
@@ -212,35 +260,22 @@
 		<iframe id="mobile" src=""></iframe>
 		<iframe id="monitor" src=""></iframe>
 	</div>
-	<div id="edit" style="display: none" title="properties">
-		<p style="display: none">
-			<input type="text" id="id" name="id"><br>
-		</p>
-		Name: <input type="text" id="name" name="name"><br> <select
-			id="type">
-			<option value="youtube">Youtube</option>
-			<option value="text">Text</option>
-		</select> <br> Content:
-		<div id="url" style="display: none">
-			<input type="text" name="url"><br>
-		</div>
-		<div id="textarea" style="display: none">
-			<textarea name="msgbox" id="msgbox" cols="50" rows="10">
-			</textarea>
-		</div>
-		<div id="content"></div>
-		<button onclick="edit()">Opslaan</button>
-	</div>
-	<div id="myDialog" style="display:none">
-		<div class="hd">Please enter your information</div>
-		<div class="bd">
-			<form name="dlgForm" method="POST" action="php/post.php">
-				<p>Please enter your personal contact information:</p>
-				<label for="firstname">First Name:</label><input type="text"
-					name="firstname" /> <label for="lastname">Last Name:</label><input
-					type="text" name="lastname" />
+	<div id="dialog1" class="yui-pe-content">
+			<form method="POST" action="assets/post.php">
+				<p style="display: none">
+					<input type="text" id="id" name="id"><br>
+				</p>
+				Name: <input type="text" id="name" name="name"><br><br>
+				Type: <select id="type">
+					<option value="youtube">Youtube</option>
+					<option value="text">Text</option>
+				</select> <br><br>
+				Content:
+				<div id="url" style="display: none">
+					<input type="text" name="url"><br>
+				</div>
+				<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea>
 			</form>
-		</div>
 	</div>
 </body>
 </html>
