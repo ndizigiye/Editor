@@ -1,53 +1,12 @@
 <html>
-<!-- -------Yahoo! Dialog--------------------------------------------------- -->
-<!-- Sam Skin CSS -->
+<!-- -------Yahoo! CSS Javascript--------------------------------------------------- -->
+
+<!-- Combo-handled YUI CSS files: -->
 <link rel="stylesheet" type="text/css"
-	href="http://yui.yahooapis.com/2.9.0/build/container/assets/skins/sam/container.css">
-
-<!-- OPTIONAL: You only need the YUI Button CSS if you're including YUI Button, mentioned below. -->
-<link rel="stylesheet" type="text/css"
-	href="http://yui.yahooapis.com/2.9.0/build/button/assets/skins/sam/button.css">
-
-<!-- Dependencies -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-
-<!-- OPTIONAL: Animation (only required if using ContainerEffect) -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/animation/animation-min.js"></script>
-
-<!-- OPTIONAL: Connection (only required if using asynchronous form submission) -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/connection/connection-min.js"></script>
-
-<!-- OPTIONAL: Drag & Drop (only required if enabling Drag & Drop) -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/dragdrop/dragdrop-min.js"></script>
-
-<!-- OPTIONAL: YUI Button (these 2 files only required if you want Dialog to use YUI Buttons, instead of HTML Buttons) -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
-
-<!-- Source file -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/container/container-min.js"></script>
-
-<!-- -------Yahoo! Editor--------------------------------------------------- -->
-<link rel="stylesheet" type="text/css"
-	href="http://yui.yahooapis.com/2.9.0/build/assets/skins/sam/skin.css">
-<!-- Utility Dependencies -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/element/element-min.js"></script>
-<!-- Needed for Menus, Buttons and Overlays used in the Toolbar -->
-<script
-	src="http://yui.yahooapis.com/2.9.0/build/container/container_core-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/menu/menu-min.js"></script>
-<script src="http://yui.yahooapis.com/2.9.0/build/button/button-min.js"></script>
-<!-- Source file for Rich Text Editor-->
-<script src="http://yui.yahooapis.com/2.9.0/build/editor/editor-min.js"></script>
+	href="http://yui.yahooapis.com/combo?2.9.0/build/assets/skins/sam/skin.css">
+<!-- Combo-handled YUI JS files: -->
+<script type="text/javascript"
+	src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&2.9.0/build/element/element-min.js&2.9.0/build/connection/connection-min.js&2.9.0/build/dragdrop/dragdrop-min.js&2.9.0/build/container/container-min.js&2.9.0/build/menu/menu-min.js&2.9.0/build/button/button-min.js&2.9.0/build/editor/editor-min.js"></script>
 
 <!-- -------------------------------------------------------------------------------------------------- -->
 
@@ -68,90 +27,56 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 <script>
-YAHOO.namespace("example.container");
+	YAHOO.namespace("example.container");
 
-$(document).ready(
-		function() {
+	$(document).ready(function() {
 
-			var myEditor = new YAHOO.widget.Editor('msgpost', {
-				width : "30em",
-				dompath : true, //Turns on the bar at the bottom
-				animate : true
-			//Animates the opening, closing and moving of Editor windows
-			});
-			myEditor.render();
-
-			// Define various event handlers for Dialog
-			var handleSubmit = function() {
-				this.submit();
-			};
-			var handleCancel = function() {
-				this.cancel();
-			};
-			var handleSuccess = function(o) {
-				var response = o.responseText;
-				response = response.split("<!")[0];
-				document.getElementById("resp").innerHTML = response;
-			};
-			var handleFailure = function(o) {
-				alert("Submission failed: " + o.status);
-			};
-
-			// Instantiate the Dialog
-			YAHOO.example.container.dialog1 = new YAHOO.widget.Dialog(
-					"dialog1", {
-						width : "70em",
-						fixedcenter : true,
-						visible : false,
-						constraintoviewport : true,
-						buttons : [ {
-							text : "Submit",
-							handler : handleSubmit,
-							isDefault : true
-						}, {
-							text : "Cancel",
-							handler : handleCancel
-						} ]
-					});
-
-			// Render the Dialog
-			YAHOO.example.container.dialog1.render();
+		var myEditor = new YAHOO.widget.Editor('msgpost', {
+			width : "30em",
+			dompath : true, //Turns on the bar at the bottom
+			animate : true
+		//Animates the opening, closing and moving of Editor windows
 		});
-		
+		myEditor.render();
+
+		// Define various event handlers for Dialog
+		var handleSubmit = function() {
+			edit();
+		};
+		var handleCancel = function() {
+			this.cancel();
+			
+		};
+
+		// Instantiate the Dialog
+		YAHOO.example.container.dialog1 = new YAHOO.widget.Dialog("dialog1", {
+			width : "70em",
+			fixedcenter : true,
+			visible : false,
+			constraintoviewport : true,
+			buttons : [ {
+				text : "Save",
+				handler : handleSubmit,
+				isDefault : true
+			}, {
+				text : "Cancel",
+				handler : handleCancel
+			} ]
+		});
+
+		// Render the Dialog
+		YAHOO.example.container.dialog1.render();
+	});
+
 	var myEditor = new YAHOO.widget.Editor('msgbox', {
-		height : '300px',
+		//height : '300px',
 		width : '522px',
-		dompath : true, //Turns on the bar at the bottom
+		//dompath : true, //Turns on the bar at the bottom
 		animate : true
 	//Animates the opening, closing and moving of Editor windows
 	});
 	myEditor.render();
 
-	var myDialog = new YAHOO.widget.Dialog('myDialog', {
-		width : "725px",
-		fixedcenter : true,
-		modal : true,
-		visible : true
-	});
-
-	//set up buttons for the Dialog and wire them 
-	//up to our handlers: 
-	var handleCancel = function() {
-		this.cancel();
-	};
-	var handleSubmit = function() {
-		this.submit();
-	};
-	var myButtons = [ {
-		text : "Submit",
-		handler : handleSubmit,
-		isDefault : true
-	}, {
-		text : "Cancel",
-		handler : handleCancel
-	} ];
-	
-	myDialog.cfg.queueProperty("buttons", myButtons);
 
 	var socket = io.connect("http://" + window.location.host + "/");
 	var gameid = "";
@@ -174,9 +99,13 @@ $(document).ready(
 	}
 
 	function save() {
-		var html = $("#mobile").contents().find("html").html();
-		var path = './Games/' + gameid + '/index.html';
-		socket.emit("save", path, html);
+		var html_mobile = $("#mobile").contents().find("html").html();
+		var html_monitor = $("#monitor").contents().find("html").html();
+		var path_mobile = './Games/' + gameid + '/index.html';
+		var path_monitor = './Games/' + gameid + '/monitor.html';
+		
+		socket.emit("save", path_mobile, html_mobile);
+		socket.emit("save", path_monitor, html_monitor);
 	}
 
 	function add(element) {
@@ -194,13 +123,28 @@ $(document).ready(
 		var iframe = document.getElementById(iframeid);
 		iframe.src = iframe.src;
 	}
+	
+	function addMonitorText(id,editorContent){
+		var html = new Html();
+		var content = html.addDiv(id,editorContent);
+		$('#monitor').contents().find('body').append(content);
+		save();
+	}
 
 	function edit() {
-
+		var selected = $("select option:selected").val();
 		var id = $("#id").val();
 		var title = $("#name").val();
-		var content = $("#content").val();
+		var editorContent = "";
 
+		if (selected == "youtube") {
+			var content = $("#url_value").val();
+		} else {
+			var content = "#" + id;
+
+			alert(editorContent);
+			addMonitorText(id, editorContent);
+		}
 		$('#mobile').contents().find("#" + id).attr("onclick",
 				"emitter('youtube','" + content + "')");
 		$('#mobile').contents().find("#" + id).html(title);
@@ -209,18 +153,19 @@ $(document).ready(
 
 	$(document).ready(
 			function() {
-				myDialog.render();
+				//dialog1.render();
 				//content div is an url field by default
-				$("#content").html($("#url").html());
 
 				$("#mobile").load(
 						function() {
 							$("#mobile").contents().find(".buttons").bind(
 									"contextmenu", function(e) {
 										e.preventDefault();
-										var name = $(this.id).html();
+										var name = $("#mobile").contents().find("#"+this.id).text();
 										$("#id").attr("value", this.id);
 										$("#name").attr("value", name);
+										$("#id").text(this.id);
+										$("#name").text(name);
 										YAHOO.example.container.dialog1.show();
 									});
 							$("#mobile").contents().find(".delete").bind(
@@ -235,16 +180,15 @@ $(document).ready(
 					var text_content = $("#textarea").html();
 					var value = $("select option:selected").val();
 					if (value == "youtube") {
-						$("#content").html(url_content);
+						$("#url").attr("style", "display :block");
+						$("#text").attr("style", "display :none");
 					} else {
-						$("#content").html(text_content);
+						$("#url").attr("style", "display :none");
+						$("#text").attr("style", "display :block");
+
 					}
 				}).trigger('change');
 			});
-
-	function shows() {
-		alert(tinyMCE.activeEditor.getContent());
-	}
 </script>
 <body class="yui-skin-sam" onload="initiate()">
 	<div id="wrap">
@@ -261,21 +205,19 @@ $(document).ready(
 		<iframe id="monitor" src=""></iframe>
 	</div>
 	<div id="dialog1" class="yui-pe-content">
-			<form method="POST" action="assets/post.php">
-				<p style="display: none">
-					<input type="text" id="id" name="id"><br>
-				</p>
-				Name: <input type="text" id="name" name="name"><br><br>
-				Type: <select id="type">
-					<option value="youtube">Youtube</option>
-					<option value="text">Text</option>
-				</select> <br><br>
-				Content:
-				<div id="url" style="display: none">
-					<input type="text" name="url"><br>
-				</div>
-				<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea>
-			</form>
+			<p style="display: none">
+				<input type="text" id="id" name="id" value=""><br>
+			</p>
+			Name: <input type="text" id="name" name="name" value=""><br> <br>
+			Type: <select id="type">
+				<option value="youtube">Youtube</option>
+				<option value="text">Text</option>
+			</select> <br> <br> Content:
+			<div id="url" style="display: none">
+				<input id="url_value" name="url"><br>
+			</div>
+			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea>
+			<button onclick="edit()">Save</button>
 	</div>
 </body>
 </html>
