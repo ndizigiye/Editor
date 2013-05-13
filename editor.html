@@ -27,56 +27,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 <script>
-	YAHOO.namespace("example.container");
-
-	$(document).ready(function() {
-
-		var myEditor = new YAHOO.widget.Editor('msgpost', {
-			width : "30em",
-			dompath : true, //Turns on the bar at the bottom
-			animate : true
-		//Animates the opening, closing and moving of Editor windows
-		});
-		myEditor.render();
-
-		// Define various event handlers for Dialog
-		var handleSubmit = function() {
-			edit();
-		};
-		var handleCancel = function() {
-			this.cancel();
-			
-		};
-
-		// Instantiate the Dialog
-		YAHOO.example.container.dialog1 = new YAHOO.widget.Dialog("dialog1", {
-			width : "70em",
-			fixedcenter : true,
-			visible : false,
-			constraintoviewport : true,
-			buttons : [ {
-				text : "Save",
-				handler : handleSubmit,
-				isDefault : true
-			}, {
-				text : "Cancel",
-				handler : handleCancel
-			} ]
-		});
-
-		// Render the Dialog
-		YAHOO.example.container.dialog1.render();
-	});
-
-	var myEditor = new YAHOO.widget.Editor('msgbox', {
-		//height : '300px',
-		width : '522px',
-		//dompath : true, //Turns on the bar at the bottom
-		animate : true
-	//Animates the opening, closing and moving of Editor windows
-	});
-	myEditor.render();
-
 
 	var socket = io.connect("http://" + window.location.host + "/");
 	var gameid = "";
@@ -162,20 +112,25 @@
 
 	$(document).ready(
 			function() {
-				//dialog1.render();
-				//content div is an url field by default
+				var myEditor = new YAHOO.widget.Editor('msgpost', {
+				    height: '300px',
+				    width: '690px',
+				    dompath: true, //Turns on the bar at the bottom
+				    animate: true //Animates the opening, closing and moving of Editor windows
+				});
 
 				$("#mobile").load(
 						function() {
 							$("#mobile").contents().find(".buttons").bind(
 									"contextmenu", function(e) {
+										myEditor.render();
 										e.preventDefault();
 										var name = $("#mobile").contents().find(this.id).text();
 										$("#id").attr("value", this.id);
 										$("#name").attr("value", name);
 										$("#id").text(this.id);
 										$("#name").text(name);
-										YAHOO.example.container.dialog1.show();
+										$( "#dialog" ).dialog({ width: 700});
 									});
 							$("#mobile").contents().find(".buttondel").bind(
 									"click", function(e) {
@@ -189,13 +144,19 @@
 					var value = $("select option:selected").val();
 					if (value == "youtube") {
 						$("#url").attr("style", "display :block");
-						$("#text").attr("style", "display :none");
+						$("#msgpost").attr("style", "display :none");
 					} else {
 						$("#url").attr("style", "display :none");
-						$("#text").attr("style", "display :block");
+						$("#msgpost").attr("style", "display :block");
 
 					}
 				}).trigger('change');
+				
+				$("#showing").bind(
+						"click", function(e) {
+							myEditor.saveHTML();
+							console.log(myEditor.get('element').value);
+						});
 			});
 </script>
 <body class="yui-skin-sam" onload="initiate()">
@@ -212,7 +173,7 @@
 		<iframe id="mobile" src=""></iframe>
 		<iframe id="monitor" src=""></iframe>
 	</div>
-	<div id="dialog1" class="yui-pe-content">
+	<div id="dialog" style="display: none">
 			<p style="display: none">
 				<input type="text" id="id" name="id" value=""><br>
 			</p>
@@ -220,12 +181,13 @@
 			Type: <select id="type">
 				<option value="youtube">Youtube</option>
 				<option value="text">Text</option>
-			</select> <br> <br> Content:
-			<div id="url" style="display: none">
-				<input id="url_value" name="url"><br>
-			</div>
+			</select> <br> <br>
+			Content: <div id="url" style="display: none">
+						<input id="url_value" name="url"><br>
+					</div>
 			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea>
 			<button onclick="edit()">Save</button>
+			<button id="showing">Editor</button>
 	</div>
 </body>
 </html>
