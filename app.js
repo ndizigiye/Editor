@@ -53,7 +53,7 @@ io.sockets.on('connection', function(socket) {
     	var monitor_html = new Html();
     	
     	var mobilehtml = mobile_html.addHeader() + mobile_html.addJs()+mobile_html.addEmitter()+ mobile_html.addFooter();
-    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs() +monitor_html.addListener()+ monitor_html.addFooter();
+    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+ monitor_html.addFooter();
     	
     	var mobile_location = './Games/'+id+'/index.html';
     	var monitor_location = './Games/'+id+'/monitor.html';

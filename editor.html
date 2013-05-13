@@ -15,7 +15,7 @@
 <script
 	src="http://localhost:8080/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="http://localhost:8080/lib/html.js"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
@@ -99,19 +99,28 @@
 	}
 
 	function save() {
+		var html_start = "<html>";
+		var html_close = "</html>";
 		var html_mobile = $("#mobile").contents().find("html").html();
 		var html_monitor = $("#monitor").contents().find("html").html();
 		var path_mobile = './Games/' + gameid + '/index.html';
 		var path_monitor = './Games/' + gameid + '/monitor.html';
 		
-		socket.emit("save", path_mobile, html_mobile);
-		socket.emit("save", path_monitor, html_monitor);
+		socket.emit("save", path_mobile, html_start+html_mobile+html_close);
+		socket.emit("save", path_monitor, html_start+html_monitor+html_close);
 	}
 
 	function add(element) {
 		var html = new Html();
-		var buttonid = $("#mobile").contents().find(".buttons").size() + 1;
-		var name = "button" + buttonid;
+		var latestbuttonID = $("#mobile").contents().find(".buttons").last().attr('id');
+		if (latestbuttonID !== undefined){
+		var latestbuttonNumber = latestbuttonID.split(" ");
+		var buttonid  = parseInt(latestbuttonNumber[1]) + 1;
+		}
+		else{
+         var buttonid = 1;
+		}
+		var name = "button " + buttonid;
 		var button = html.addButton(name, 'youtube',
 				'https://www.youtube.com/watch?v=f_SnZubaArM');
 		$('#mobile').contents().find('body').append(button);
@@ -161,17 +170,16 @@
 							$("#mobile").contents().find(".buttons").bind(
 									"contextmenu", function(e) {
 										e.preventDefault();
-										var name = $("#mobile").contents().find("#"+this.id).text();
+										var name = $("#mobile").contents().find(this.id).text();
 										$("#id").attr("value", this.id);
 										$("#name").attr("value", name);
 										$("#id").text(this.id);
 										$("#name").text(name);
 										YAHOO.example.container.dialog1.show();
 									});
-							$("#mobile").contents().find(".delete").bind(
+							$("#mobile").contents().find(".buttondel").bind(
 									"click", function(e) {
-										$(this).prev().remove();
-										$(this).remove();
+										$(this).parent().remove();
 										save();
 									});
 						});
