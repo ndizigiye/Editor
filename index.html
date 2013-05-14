@@ -30,8 +30,7 @@ function verwijder(id){
 }
 
 function verwijderbutton(id){
-	$("#"+id).remove();
-	console.log(id);
+	$("#"+id).parent().remove();
 }
 
 function redirect(game){
@@ -42,17 +41,17 @@ function searchGames(){
 	socket.emit('search', function (games){
 	for (var i in games){
 	var html = '<a href="/editor.html?gameid='+games[i]+'">'+games[i]+'</a>'; 
-	var deletebutton = '<button id="'+games[i]+"del"+'" onclick="verwijder(\''+games[i]+'\');verwijderbutton(\''+games[i]+"del"+'\');">Delete</button><br>';
-	$("ul").append('<li>'+html+deletebutton+'</li>');
+	var deletebutton = '<button id="'+games[i]+"del"+'" onclick="verwijder(\''+games[i]+'\');verwijderbutton(this.id);">Delete</button>';
+	$("ul").append('<li>'+deletebutton+html+'</li>');
 	}
 	});
 }
 </script>
 </head>
 <body onload="searchGames()">
-<button class="button_create" onclick="Game()">Make a new Game</button><br>
 
-<h1>Existing games</h1>
+
+<h2>Existing games</h2><button class="button_create" onclick="Game()">Make a new Game</button><br>
 <ul>
 </ul>
 
