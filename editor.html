@@ -64,13 +64,13 @@
 		var html = new Html();
 		var latestbuttonID = $("#mobile").contents().find(".buttons").last().attr('id');
 		if (latestbuttonID !== undefined){
-		var latestbuttonNumber = latestbuttonID.split(" ");
+		var latestbuttonNumber = latestbuttonID.split("_");
 		var buttonid  = parseInt(latestbuttonNumber[1]) + 1;
 		}
 		else{
          var buttonid = 1;
 		}
-		var name = "button " + buttonid;
+		var name = "button_" + buttonid;
 		var button = html.addButton(name, 'youtube',
 				'https://www.youtube.com/watch?v=f_SnZubaArM');
 		$('#mobile').contents().find('body').append(button);
@@ -88,6 +88,17 @@
 		var content = html.addDiv(id,editorContent);
 		$('#monitor').contents().find('body').append(content);
 		save();
+	}
+	
+	function getButtonProperties(id){
+		var name = $("#mobile").contents().find("#"+id).text();
+		name = $.trim(name);
+		var onclick = $("#mobile").contents().find("#"+id).attr('onclick');
+		var split_onclick = onclick.split("\'");
+		var type = split_onclick[1];
+		var content = split_onclick[3];
+		var properties = [name,type,content];
+		return properties;
 	}
 
 	function edit() {
@@ -125,11 +136,11 @@
 									"contextmenu", function(e) {
 										myEditor.render();
 										e.preventDefault();
-										var name = $("#mobile").contents().find(this.id).text();
-										$("#id").attr("value", this.id);
-										$("#name").attr("value", name);
-										$("#id").text(this.id);
-										$("#name").text(name);
+										var name = $("#mobile").contents().find("#"+this.id).text();
+										var properties = getButtonProperties(this.id);
+										$("#id").val(this.id);
+										$("#name").val(properties[0]);
+										$("select").val(properties[1]);
 										$( "#dialog" ).dialog({ width: 700});
 									});
 							$("#mobile").contents().find(".buttondel").bind(

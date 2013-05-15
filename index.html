@@ -9,51 +9,74 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 </head>
 <script>
-var socket = io.connect("http://" +window.location.host + "/");
+	var socket = io.connect("http://" + window.location.host + "/");
+	var games_array = new Array();
 
-function Game(){
-	
-	var game=prompt("create a new game");
-	
-	if (game!=null)
-	  {
-		socket.emit('game',game);
-	  }
-	window.location.href = "http://" +window.location.host + "/editor.html"+"?gameid="+game;
-}
+	function Game() {
 
-function verwijder(id){
-	var dir = './Games/'+id;
-	socket.emit('delete game',dir);
-	$("#"+id).remove();
-	console.log(id);
-}
+		var game = $("#gamename").val();
+		var name_exists = false;
 
-function verwijderbutton(id){
-	$("#"+id).parent().remove();
-}
+		for ( var i in games_array) {
+			if (games_array[i] == game) {
+				name_exists = true;
+			}
+		}
 
-function redirect(game){
-	window.location.href = "http://" +window.location.host + "/editor.html"+"?gameid="+game;
-}
+		if (game && !name_exists) {
+			socket.emit('game', game);
+			window.location.href = "http://" + window.location.host
+					+ "/editor.html" + "?gameid=" + game;
+		} else if (name_exists) {
+			alert('Game already exists!');
+		}
 
-function searchGames(){
-	socket.emit('search', function (games){
-	for (var i in games){
-	var html = '<a href="/editor.html?gameid='+games[i]+'">'+games[i]+'</a>'; 
-	var deletebutton = '<button id="'+games[i]+"del"+'" onclick="verwijder(\''+games[i]+'\');verwijderbutton(this.id);">Delete</button>';
-	$("ul").append('<li>'+deletebutton+html+'</li>');
+		else {
+			alert('Provide a valid name!');
+		}
 	}
-	});
-}
+
+	function verwijder(id) {
+		var dir = './Games/' + id;
+		socket.emit('delete game', dir);
+		$("#" + id).remove();
+		console.log(id);
+	}
+
+	function verwijderbutton(id) {
+		$("#" + id).parent().remove();
+	}
+
+	function searchGames() {
+		socket.emit('search', function(games) {
+			games_array = games;
+			for ( var i in games) {
+				var html = '<a href="/editor.html?gameid=' + games[i] + '">'
+						+ games[i] + '</a>';
+				var deletebutton = '<button id="' + games[i] + "del"
+						+ '" class="button_delete" onclick="verwijder(\''
+						+ games[i]
+						+ '\');verwijderbutton(this.id);">Delete</button>';
+				$("ul").append('<li>' + deletebutton + html + '</li>');
+			}
+		});
+	}
 </script>
 </head>
 <body onload="searchGames()">
 
 
-<h2>Existing games</h2><button class="button_create" onclick="Game()">Make a new Game</button><br>
-<ul>
-</ul>
+	<h2>Existing games</h2>
+	<button class="button_new" onclick='$("#new_game").show();'>Make
+		a new Game</button>
+	<br>
+	<div id="new_game">
+		Game name (must be unique):<br> <input type="text"
+			class="nice-input" name="gamename" id="gamename">
+		<button class="button_create" onclick="Game()">Create</button>
+	</div>
+	<ul>
+	</ul>
 
 
 </body>
