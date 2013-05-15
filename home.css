@@ -3,6 +3,11 @@
 	border-width: 1px;
 }
 
+body{
+	background-color    : #ffffff;
+    background-repeat   : repeat;
+}
+
 #wrap {
 	position: absolute;
 	width: 1200px;
@@ -151,7 +156,10 @@ li a {
   -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
   transition: font-size 0.3s ease, background-color 0.3s ease;
 }
- 
+
+#loading{
+	margin: 40px 0px 0px 200px;
+}
 li a:hover {
   font-size: 30px;
   background: #f6f6f6;
