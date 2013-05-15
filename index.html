@@ -41,6 +41,12 @@
 		socket.emit('delete game', dir);
 		$("#" + id).remove();
 		console.log(id);
+		
+		for ( var i in games_array) {
+			if (games_array[i] == id) {
+				games_array.splice(i,1);
+			}
+		}
 	}
 
 	function verwijderbutton(id) {
