@@ -32,6 +32,7 @@
 	var mobile_url = "";
 	var monitor_url = "";
 	var editor_content = "";
+	
 
 
 	function initiate() {
@@ -87,6 +88,7 @@
 	function addMonitorText(id,editorContent){
 		var html = new Html();
 		var content = html.addDiv(id,editorContent);
+		$('#monitor').contents().find("#"+id).remove();
 		$('#monitor').contents().find('body').append(content);
 		save();
 	}
@@ -105,24 +107,37 @@
 
 		return properties;
 	}
+	
+	function insertIntoEditor(id){
+		var html = $('#monitor').contents().find("#" + id).html();
+		var editor_html = '&lt;p&gt;'+html+'&lt;/p&gt;';
+		console.log(html);
+		$('#msgpost').html(editor_html);
+	}
 
 	function edit() {
 		var selected = $("select option:selected").val();
 		var id = $("#id").val();
 		var title = $("#name").val();
-		var editorContent = "";
+		var mobile_title = '<span class="ui-btn-inner">'+'\n'
+						  +'<span class="ui-btn-text">'+title+'</span>'+'\n'
+						  +'</span>';		
+		var editor1 = CKEDITOR.instances['msgpost'];
+		var editorContent = editor1.getData();
 
 		if (selected == "youtube") {
 			var content = $("#url_value").val();
+			$('#mobile').contents().find("#" + id).attr("onclick",
+					"emitter('youtube','" + content + "')");
 		} else {
 			var content = "#" + id;
 
 			alert(editorContent);
 			addMonitorText(id, editorContent);
+			$('#mobile').contents().find("#" + id).attr("onclick",
+					"emitter('text','" + content + "')");
 		}
-		$('#mobile').contents().find("#" + id).attr("onclick",
-				"emitter('youtube','" + content + "')");
-		$('#mobile').contents().find("#" + id).html(title);
+		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();
 	}
 
@@ -143,12 +158,23 @@
 										    toolbar: 'Basic',
 										    uiColor: '#9AB8F3'
 										});
-
+										if(properties[1] == "youtube"){
+											var editor = CKEDITOR.instances['msgpost'];
+											if (editor) { editor.destroy(true); }
+											$("#msgpost").hide();
+											$("#url").show();
+											$("#url_value").val(properties[2]);
+										}
+										else{
+											insertIntoEditor(this.id);
+											$("#url").hide();
+										}
 										$("select").val(properties[1]);
 										$( "#dialog" ).dialog({ width: 750});
 									});
 							$("#mobile").contents().find(".buttondel").bind(
 									"click", function(e) {
+										$(this).parent().prev().remove();
 										$(this).parent().remove();
 										save();
 									});
@@ -160,16 +186,26 @@
 					var value = $("select option:selected").val();
 					if (value == "youtube") {
 						$("#url").show();
+						var editor = CKEDITOR.instances['msgpost'];
+					    if (editor) { $("#cke_msgpost").hide(); }
 					} else {
-						//myEditor.render();
+						var editor = CKEDITOR.instances['msgpost'];
+					    if (editor) { $("#cke_msgpost").show(); }
+					    else{
+					    CKEDITOR.replace( 'msgpost', {
+						    toolbar: 'Basic',
+						    uiColor: '#9AB8F3'
+						});
+					    }
 						$("#url").hide();
+						
 					}
 				}).trigger('change');
 				
 				$("#showing").bind(
 						"click", function(e) {
-							myEditor.saveHTML();
-							console.log(myEditor.get('element').value);
+							var editor1 = CKEDITOR.instances['msgpost'];
+							console.log(editor1.getData());
 						});
 			});
 </script>
@@ -196,10 +232,10 @@
 				<option value="text" selected="selected">Text</option>
 				<option value="youtube">Youtube</option>
 			</select> <br> <br>
-			Content: <br> <br> 
+			<h5>Content:</h5> 
 			
-			<div id="url" style="display: none">
-					<input id="url_value" class="nice-input" name="url">
+			<div id="url" style="display:none">
+			Url: <input id="url_value" class="nice-input-url" name="url">
 			</div><br>
 			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea><br><br>
 			<button onclick="edit()">Save</button>

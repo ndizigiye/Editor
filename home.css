@@ -165,7 +165,16 @@ li a:hover {
     outline:none;
 }
 
-.nice-input:focus {
+.nice-input-url {
+	width: 700px;
+    background:#fff;
+    border-color:#aaa #eaeaea #eaeaea #eaeaea; border-style:solid; border-width:1px;
+    font-size:1.6em;
+    padding:3px 5px;
+    outline:none;
+}
+
+.nice-input:focus,.nice-input-url:focus  {
     border-color:#aaa;
     -webkit-box-shadow:0px 0px 5px #aaa; -moz-box-shadow:0px 0px 5px #aaa;
         -o-box-shadow:0 0 5px #aaa; box-shadow:0 0 5px #aaa;
