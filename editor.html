@@ -12,8 +12,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/lib/user.js"></script>
-<script
-	src="/lib/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="/lib/ckeditor/ckeditor.js"></script>
 <script src="/lib/html.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -32,6 +31,8 @@
 	var gameid = "";
 	var mobile_url = "";
 	var monitor_url = "";
+	var editor_content = "";
+
 
 	function initiate() {
 		var param = window.location.search.replace("?", "");
@@ -98,6 +99,10 @@
 		var type = split_onclick[1];
 		var content = split_onclick[3];
 		var properties = [name,type,content];
+		
+		var url_content = $("#url").html();
+		var text_content = $("#textarea").html();
+
 		return properties;
 	}
 
@@ -123,25 +128,24 @@
 
 	$(document).ready(
 			function() {
-				var myEditor = new YAHOO.widget.Editor('msgpost', {
-				    height: '300px',
-				    width: '690px',
-				    dompath: true, //Turns on the bar at the bottom
-				    animate: true //Animates the opening, closing and moving of Editor windows
-				});
-
 				$("#mobile").load(
 						function() {
 							$("#mobile").contents().find(".buttons").bind(
 									"contextmenu", function(e) {
-										myEditor.render();
 										e.preventDefault();
 										var name = $("#mobile").contents().find("#"+this.id).text();
 										var properties = getButtonProperties(this.id);
 										$("#id").val(this.id);
 										$("#name").val(properties[0]);
+										var editor = CKEDITOR.instances['msgpost'];
+									    if (editor) { editor.destroy(true); }
+									    CKEDITOR.replace( 'msgpost', {
+										    toolbar: 'Basic',
+										    uiColor: '#9AB8F3'
+										});
+
 										$("select").val(properties[1]);
-										$( "#dialog" ).dialog({ width: 700});
+										$( "#dialog" ).dialog({ width: 750});
 									});
 							$("#mobile").contents().find(".buttondel").bind(
 									"click", function(e) {
@@ -150,16 +154,15 @@
 									});
 						});
 				$("select").change(function() {
+					
 					var url_content = $("#url").html();
 					var text_content = $("#textarea").html();
 					var value = $("select option:selected").val();
 					if (value == "youtube") {
-						$("#url").attr("style", "display :block");
-						$("#msgpost").attr("style", "display :none");
+						$("#url").show();
 					} else {
-						$("#url").attr("style", "display :none");
-						$("#msgpost").attr("style", "display :block");
-
+						//myEditor.render();
+						$("#url").hide();
 					}
 				}).trigger('change');
 				
@@ -188,15 +191,17 @@
 			<p style="display: none">
 				<input type="text" id="id" name="id" value=""><br>
 			</p>
-			Name: <input type="text" id="name" name="name" value=""><br> <br>
-			Type: <select id="type">
+			Name: <input type="text" id="name" class="nice-input" name="name" value=""><br> <br>
+			Type: <select class="nice-input">
+				<option value="text" selected="selected">Text</option>
 				<option value="youtube">Youtube</option>
-				<option value="text">Text</option>
 			</select> <br> <br>
-			Content: <div id="url" style="display: none">
-						<input id="url_value" name="url"><br>
-					</div>
-			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea>
+			Content: <br> <br> 
+			
+			<div id="url" style="display: none">
+					<input id="url_value" class="nice-input" name="url">
+			</div><br>
+			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea><br><br>
 			<button onclick="edit()">Save</button>
 			<button id="showing">Editor</button>
 	</div>
