@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/lib/Html.js"></script>
+<link rel="stylesheet" type="text/css" href="home.css">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script>
+	$(document).ready(
+			function() {
+
+				for ( var i = 1; i < 10; i++) {
+					var tr = [ "<tr>", "</tr>" ];
+					$("table").append(tr[0]);
+					for ( var j = 1; j < 10; j++) {
+						$("tr").last()
+								.append(
+										"<td class='bla' id="+i+"_"+j+"></td>");
+					}
+					$("table").append(tr[1]);
+				}
+
+				$('.bla').mousedown(function(e) {
+					
+					if($(this).css("background-color") == "rgb(255, 255, 153)" && e.which == 1){
+					$(this).css("background-color","#FFFFFF");
+					}
+					else if(e.which == 1 && $(this).css("background-color") != "rgb(255, 255, 153)"){
+					$(this).css("background-color","#FFFF99");
+					}
+				});
+				
+				$('.bla').bind( "contextmenu", function(e) {
+					e.preventDefault();
+					var td = $('tr').find('td');
+						for (var i in td){
+							var id = td[i];
+							if($(id).css("background-color") == "rgb(255, 255, 153)"){
+								console.log(id);
+							}
+						}
+				});
+			});
+</script>
+</head>
+<body>
+	<table>
+	</table>
+</body>
+</html>

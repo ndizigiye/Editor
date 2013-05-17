@@ -14,7 +14,7 @@ var io = require('socket.io').listen(server);
 // io.set("polling duration", 100000);
 // });
 
-server.listen(process.env.PORT);
+server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname + '/'));
 
 function writeFile(location,html){
