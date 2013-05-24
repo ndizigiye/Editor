@@ -81,7 +81,7 @@ io.sockets.on('connection', function(socket) {
     
     socket.on('findUser',function(find){
     	var l = new Login();
-    	var users = l.login();
+    	var users = l.login(username);
     	find(users);
     });
     
