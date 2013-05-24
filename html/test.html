@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/lib/Html.js"></script>
+<link rel="stylesheet" type="text/css" href="home.css">
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script>
+	$(document)
+			.ready(
+					function() {
+						//draw the table
+						var rows = 10;
+						var cols = 20;
+						//track mouse press
+						var isDown = false;
+
+						$(document).mousedown(function() {
+							isDown = true; // When mouse goes down, set isDown to true
+						}).mouseup(function() {
+							isDown = false; // When mouse goes up, set isDown to false
+						});
+
+						for ( var i = 0; i < rows; i++) {
+							var tr = [ "<tr>", "</tr>" ];
+							$("table").append(tr[0]);
+							for ( var j = 0; j < cols; j++) {
+								$("tr")
+										.last()
+										.append(
+												"<td class='cell' id="+i+"_"+j+"></td>");
+							}
+							$("table").append(tr[1]);
+						}
+
+						//hover on a cell
+						$('td').hover(function() {
+							$(this).css("border", "1px solid #1A87B9");
+						}, function() {
+							$(this).css("border", "1px solid #FFFFFF");
+						});
+
+						//mark a cell
+						$('.cell')
+								.mousedown(
+										function(e) {
+
+											if ($(this).css("background-color") == "rgb(26, 135, 185)"
+													&& e.which == 1) {
+												$(this).css("background-color",
+														"#FFFFFF");
+											} else if (e.which == 1
+													&& $(this).css(
+															"background-color") != "rgb(26, 135, 185)") {
+												$(this).css("background-color",
+														"#1A87B9");
+											}
+										});
+
+						//combine two or more cells
+						$('.cell').bind(
+								"contextmenu",
+								function(e) {
+									e.preventDefault();
+									var td = $('tr').find('td');
+									for ( var i in td) {
+										var id = td[i].id;
+										var background = $("#" + id).css(
+												"background-color");
+										if (background == "rgb(26, 135, 185)") {
+											console.log(id);
+											$("#setcell").dialog({
+												width : 750
+											});
+										}
+									}
+								});
+					});
+</script>
+</head>
+<body>
+	<table>
+	</table>
+	<div id="setcell" style="display: none">
+		<p style="display: none">
+			<input type="text" id="id" name="id" value=""><br>
+		</p>
+		action_id: <input type="text" id="name" class="nice-input" name="name"
+			value=""><br> <br> content: <input id="url_value"
+			class="nice-input-url" name="url"><br> <br> <br>
+		<button class="button_create" onclick="edit()">Save</button>
+	</div>
+</body>
+</html>
