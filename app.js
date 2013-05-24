@@ -75,7 +75,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     socket.on('addUser',function(username,password){
-    	Login l = new Login();
+    	var l = new Login();
     	l.Register(username,password);
     });
     
