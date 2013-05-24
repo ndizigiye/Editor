@@ -19,8 +19,10 @@ function register(){
 	
 }
 
-function find(){
-	socket.emit('findUser',function (data) {
+function login(){
+	var username = $("#username").val();
+	var password = $("#password").val();
+	socket.emit('findUser',password,username,function (data) {
 	      $("body").append(data);
 	    });
 }
@@ -31,6 +33,6 @@ Username: <input type="text" id="username"><br>
 Password: <input type="text" id="password">
 <button onclick="register()">Register</button>
 
-<button onclick="find()">Register</button>
+<button onclick="login()">login</button>
 </body>
 </html>

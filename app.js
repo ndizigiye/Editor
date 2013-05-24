@@ -79,10 +79,10 @@ io.sockets.on('connection', function(socket) {
     	l.Register(username,password);
     });
     
-    socket.on('findUser',function(find){
+    socket.on('findUser',function(provided_password,username,find){
     	var l = new Login();
-    	var users = l.login(username);
-    	find(users);
+    	var exists = l.login(provided_password,username);
+    	find(exists);
     });
     
     socket.on('search', function(games){
