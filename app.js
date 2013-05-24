@@ -2,6 +2,7 @@
 var express = require("express");
 var fs = require('fs');
 var User = require("./lib/user.js").User;
+var Login = require("./lib/login.js").Login;
 var Html = require("./lib/Html.js").Html;
 var app = express();
 var http = require('http');
@@ -71,6 +72,11 @@ io.sockets.on('connection', function(socket) {
     
     socket.on('delete game',function(path){
     	removeDir(path);
+    });
+    
+    socket.on('addUser',function(username,password){
+    	Login l = new Login();
+    	l.Register(username,password);
     });
     
     socket.on('search', function(games){
