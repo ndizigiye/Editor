@@ -79,6 +79,12 @@ io.sockets.on('connection', function(socket) {
     	l.Register(username,password);
     });
     
+    socket.on('findUser',function(find){
+    	var l = new Login();
+    	var users = l.login();
+    	find(users);
+    });
+    
     socket.on('search', function(games){
     	var dir = fs.readdirSync('./Games');
     	console.log("Found"+ dir);

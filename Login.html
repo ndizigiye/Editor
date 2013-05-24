@@ -18,11 +18,19 @@ function register(){
 	socket.emit('addUser',username,password);
 	
 }
+
+function find(){
+	socket.emit('findUser',function (data) {
+	      $("body").append(data);
+	    });
+}
 </script>
 
 
 Username: <input type="text" id="username"><br>
 Password: <input type="text" id="password">
 <button onclick="register()">Register</button>
+
+<button onclick="find()">Register</button>
 </body>
 </html>
