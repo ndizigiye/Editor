@@ -85,10 +85,10 @@ io.sockets.on('connection', function(socket) {
     	removeDir(path);
     });
     
-    socket.on('addUser',function(username,password,exists){
+    socket.on('addUser',function(username,password,email,exists){
     	var l = new Login();
-    	var user_exists = l.Register(username,password);
-    	exists(user_exists);
+    	var user_exists = l.Register(username,password,email);
+    	exists(user_exists.toString());
     });
     
     socket.on('findUser',function(provided_password,username,find){

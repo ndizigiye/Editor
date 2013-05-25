@@ -14,8 +14,8 @@ function register(){
 	
 	var username = $("#username").val();
 	var password = $("#password").val();
-	
-	socket.emit('addUser',password,username,function (data) {
+	var email = $("#email").val();
+	socket.emit('addUser',password,username,email,function (data) {
 	      $("body").append(data);
 	    });
 	
@@ -33,6 +33,7 @@ function login(){
 
 Username: <input type="text" id="username"><br>
 Password: <input type="text" id="password">
+Email: <input type="text" id="email">
 <button onclick="register()">Register</button>
 
 <button onclick="login()">login</button>
