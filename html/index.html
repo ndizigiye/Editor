@@ -37,7 +37,7 @@
 	}
 
 	function verwijder(id) {
-		var dir = './Games/' + id;
+		var dir = './Games/Games/' + id;
 		socket.emit('delete game', dir);
 		$("#" + id).remove();
 		console.log(id);

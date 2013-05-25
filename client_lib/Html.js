@@ -48,7 +48,7 @@ Html.prototype.addJs = function() {
 				+'default_width: 1000,'+'\n'
 				+'default_height: 900,'+'\n'
 				+' });'
-				+'$("body").append(<table><table>);'
+				//+'$("body").append(<table><table>);'
 				+'});'+'\n'
 				+'</script>';
 	return html;

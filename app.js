@@ -3,7 +3,7 @@ var express = require("express");
 var fs = require('fs');
 var User = require("./lib/user.js").User;
 var Login = require("./lib/login.js").Login;
-var Html = require("./lib/Html.js").Html;
+var Html = require("./client_lib/Html.js").Html;
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
@@ -18,6 +18,8 @@ var io = require('socket.io').listen(server);
 server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname+'/html/'));
 app.use(express.static(__dirname+'/client_lib/'));
+app.use(express.static(__dirname+'/Games/'));
+
 function writeFile(location,html){
 	fs.writeFile(location, html, function(err) {
 		if (err)
@@ -49,7 +51,7 @@ io.sockets.on('connection', function(socket) {
     
     socket.on('game', function(id){
     	
-    	makeDir('./Games/'+id);
+    	makeDir('./Games/Games/'+id);
     	
     	var mobile_html = new Html();
     	var monitor_html = new Html();
@@ -57,8 +59,8 @@ io.sockets.on('connection', function(socket) {
     	var mobilehtml = mobile_html.addHeader() + mobile_html.addJs()+mobile_html.addEmitter()+ mobile_html.addFooter();
     	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+ monitor_html.addFooter();
     	
-    	var mobile_location = './Games/'+id+'/index.html';
-    	var monitor_location = './Games/'+id+'/monitor.html';
+    	var mobile_location = './Games/Games/'+id+'/index.html';
+    	var monitor_location = './Games/Games/'+id+'/monitor.html';
     	
     	writeFile(mobile_location  , mobilehtml);
     	writeFile(monitor_location  , monitorhtml);
@@ -71,6 +73,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     socket.on('delete game',function(path){
+    	console.log(path);
     	removeDir(path);
     });
     
@@ -86,7 +89,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     socket.on('search', function(games){
-    	var dir = fs.readdirSync('./Games');
+    	var dir = fs.readdirSync('./Games/Games');
     	console.log("Found"+ dir);
     	games(dir);
     });

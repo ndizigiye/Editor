@@ -27,8 +27,8 @@
 		var html_close = "</html>";
 		var html_mobile = $("#mobile").contents().find("html").html();
 		var html_monitor = $("#monitor").contents().find("html").html();
-		var path_mobile = './Games/' + gameid + '/index.html';
-		var path_monitor = './Games/' + gameid + '/monitor.html';
+		var path_mobile = './Games/Games/' + gameid + '/index.html';
+		var path_monitor = './Games/Games/' + gameid + '/monitor.html';
 		
 		socket.emit("save", path_mobile, html_start+html_mobile+html_close);
 		socket.emit("save", path_monitor, html_start+html_monitor+html_close);
