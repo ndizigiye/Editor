@@ -15,7 +15,9 @@ function register(){
 	var username = $("#username").val();
 	var password = $("#password").val();
 	
-	socket.emit('addUser',username,password);
+	socket.emit('addUser',password,username,function (data) {
+	      $("body").append(data);
+	    });
 	
 }
 
