@@ -16,7 +16,7 @@ function register(){
 	var password = $("#password").val();
 	var email = $("#email").val();
 	socket.emit('addUser',password,username,email,function (data) {
-	      $("body").append(data);
+	      $("body").append(data+"<br>");
 	    });
 	
 }
@@ -25,17 +25,16 @@ function login(){
 	var username = $("#username").val();
 	var password = $("#password").val();
 	socket.emit('findUser',password,username,function (data) {
-	      $("body").append(data);
+	      $("body").append(data+"<br>");
 	    });
 }
 </script>
 
 
 Username: <input type="text" id="username"><br>
-Password: <input type="text" id="password">
-Email: <input type="text" id="email">
-<button onclick="register()">Register</button>
-
-<button onclick="login()">login</button>
+Password: <input type="text" id="password"><br>
+Email: <input type="text" id="email"><br>
+<button onclick="register()">Register</button><br>
+<button onclick="login()">login</button><br>
 </body>
 </html>
