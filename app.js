@@ -17,7 +17,7 @@ var io = require('socket.io').listen(server);
 
 server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname+'/html/'));
-
+app.use(express.static(__dirname+'/client_lib/'));
 function writeFile(location,html){
 	fs.writeFile(location, html, function(err) {
 		if (err)
