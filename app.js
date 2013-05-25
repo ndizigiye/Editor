@@ -1,7 +1,7 @@
 /*Imports*/
 var express = require("express");
 var fs = require('fs');
-var User = require("./lib/user.js").User;
+var User = require("./client_lib/user.js").User;
 var Login = require("./lib/login.js").Login;
 var Html = require("./client_lib/Html.js").Html;
 var app = express();
@@ -45,6 +45,14 @@ function removeDir(path){
 
 
 io.sockets.on('connection', function(socket) {
+	//fake a new login to initiate the database
+	//
+	//
+	var l = new Login();
+	l.login("test","test");
+	//
+	//
+	//
     socket.on('open', function(type,data){
         socket.broadcast.emit('open',type,data);
     });
