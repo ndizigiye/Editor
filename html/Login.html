@@ -24,7 +24,7 @@ function register(){
 function login(){
 	var username = $("#username").val();
 	var password = $("#password").val();
-	socket.emit('findUser',password,username,function (data) {
+	socket.emit('findUser',username,password,function (data) {
 	      $("body").append(data+"<br>");
 	    });
 }

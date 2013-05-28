@@ -91,10 +91,10 @@ io.sockets.on('connection', function(socket) {
     	exists(user_exists.toString());
     });
     
-    socket.on('findUser',function(provided_password,username,find){
+    socket.on('findUser',function(provided_username,provided_password,find){
     	var l = new Login();
-    	var exists = l.login(provided_password,username);
-    	find(exists);
+    	var exists = l.simple_login(provided_username,provided_password);
+    	find(exists.toString());
     });
     
     socket.on('search', function(games){
