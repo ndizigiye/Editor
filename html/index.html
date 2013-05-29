@@ -38,7 +38,7 @@
 
 	function verwijder(id) {
 		var dir = './Games/Games/' + id;
-		socket.emit('delete game', dir);
+		socket.emit('delete', dir);
 		$("#" + id).remove();
 		console.log(id);
 		
@@ -54,7 +54,7 @@
 	}
 
 	function searchGames() {
-		socket.emit('search', function(games) {
+		socket.emit('search','./Games/Games', function(games) {
 			games_array = games;
 			$("#loading").hide();
 			for ( var i in games) {

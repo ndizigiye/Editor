@@ -19,6 +19,11 @@ server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname+'/html/'));
 app.use(express.static(__dirname+'/client_lib/'));
 app.use(express.static(__dirname+'/Games/'));
+app.use(express.bodyParser());
+
+app.post('/file-upload', function(req, res, next) {
+    console.log(req.files);
+});
 
 function writeFile(location,html){
 	fs.writeFile(location, html, function(err) {
@@ -80,7 +85,7 @@ io.sockets.on('connection', function(socket) {
     	console.log(path+ " ..."+html);
     });
     
-    socket.on('delete game',function(path){
+    socket.on('delete',function(path){
     	console.log(path);
     	removeDir(path);
     });
@@ -97,10 +102,10 @@ io.sockets.on('connection', function(socket) {
     	find(exists.toString());
     });
     
-    socket.on('search', function(games){
-    	var dir = fs.readdirSync('./Games/Games');
+    socket.on('search', function(folder,folders){
+    	var dir = fs.readdirSync(folder);
     	console.log("Found"+ dir);
-    	games(dir);
+    	folders(dir);
     });
 
 	socket.on('disconnect', function() {
