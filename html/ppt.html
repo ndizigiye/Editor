@@ -1,0 +1,91 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="/user.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/home.css">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<script>
+	var socket = io.connect("http://" + window.location.host + "/");
+	var ppt_array = new Array();
+
+	function Ppt() {
+
+		var ppt = $("#pptname").val();
+		var name_exists = false;
+
+		for ( var i in ppt_array) {
+			if (ppt_array[i] == game) {
+				name_exists = true;
+			}
+		}
+
+		if (ppt && !name_exists) {
+			socket.emit('ppt', ppt);
+			searchPpt();
+		} else if (name_exists) {
+			alert('Presentation with the same name already exists!');
+		}
+		else {
+			alert('Provide a valid name!');
+		}
+	}
+
+	function verwijder(id) {
+		var dir = './ppt' + id;
+		socket.emit('delete', dir);
+		$("#" + id).remove();
+		console.log(id);
+		
+		for ( var i in ppt_array) {
+			if (ppt_array[i] == id) {
+				ppt_array.splice(i,1);
+			}
+		}
+	}
+
+	function verwijderbutton(id) {
+		$("#" + id).parent().remove();
+	}
+
+	function searchPpt() {
+		socket.emit('search','./ppt/', function(ppt) {
+			ppt_array = ppt;
+			$("#loading").hide();
+			for ( var i in ppt) {
+				var html = '<a href="/ppt.html?pptid=' + ppt[i] + '">'
+						+ ppt[i] + '</a>';
+				var deletebutton = '<button id="' + ppt[i] + "del"
+						+ '" class="button_delete" onclick="verwijder(\''
+						+ ppt[i]
+						+ '\');verwijderbutton(this.id);">Delete</button>';
+				$("ul").append('<li>' + deletebutton + html + '</li>');
+			}
+		});
+	}
+</script>
+</head>
+<body onload="searchPpt()">
+
+
+	<h2>Existing presentations</h2>
+	<button class="button_new" onclick='$("#new_ppt").show();'>Make
+		a new Presentation</button>
+	<br>
+	<div id="new_ppt">
+		Presentation name (must be unique):<br> <input type="text"
+			class="nice-input" name="pptname" id="pptname">
+		<button class="button_create" onclick="Ppt()">Create</button>
+	</div>
+	<div id ="loading">
+	<img src="/img/loading.gif"/>
+	</div>
+	<ul>
+	</ul>
+
+
+</body>
+</html>
