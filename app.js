@@ -22,11 +22,16 @@ app.use(express.static(__dirname+'/Games/'));
 app.use(express.bodyParser());
 
 app.post('/file-upload', function(req, res, next) {
-    console.log(req.files);
+	
+	var images = req.files.images;
+	for (var i in images){
+		console.log(images[i].path +" "+images[i].name );
+	}
+    
 });
 
-function writeFile(location,html){
-	fs.writeFile(location, html, function(err) {
+function writeFile(location,content){
+	fs.writeFile(location, content, function(err) {
 		if (err)
 			console.log(err);
 		console.log('file saved!');
