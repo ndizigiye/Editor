@@ -15,19 +15,28 @@
 		$("#dir").val(pptid);
 	});
 	
-	socket.on('show_image',function(image){
+	/*socket.on('show_image',function(image){
 		
 		console.log(image);
 		
 		for(var i in images){
 			
-			$("#images").append("<img src="+images[i]+"/>");
+			$("#images").append("<img src='"+images[i]+"'/>");
 		}
 		
-	});
+	});*/
+	
+	function searchImages(){
+		socket.emit('search','./ppt/'+pptid,function(images)
+		{
+			for (var i in images){
+				$("#images").append("<img src='"+pptid+"/"+images[i]+"'/>");
+			}
+		});
+	}
 </script>
 </head>
-
+<body onload="searchImages()">
 <form method="post" enctype="multipart/form-data" action="/file-upload">
 	<input style="display: block" type="text" id="dir" name="dir" value="">
 	<input type="file" name="images" multiple> <input type="submit">

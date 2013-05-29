@@ -72,9 +72,7 @@ io.sockets.on('connection', function(socket) {
 			console.log(name+" "+newPath);
 			writeFile(newPath,content);
 		}
-		
-		socket.emit('show_image',imgSrc);
-		console.log('emitted');
+		res.send("<script src='http://code.jquery.com/jquery-latest.min.js'></script><script>$(document).ready(function(){history.back();});</script>");
 	});
 	
     socket.on('open', function(type,data){
@@ -125,10 +123,10 @@ io.sockets.on('connection', function(socket) {
     	find(exists.toString());
     });
     
-    socket.on('search', function(folder,folders){
+    socket.on('search', function(folder,content){
     	var dir = fs.readdirSync(folder);
     	console.log("Found"+ dir);
-    	folders(dir);
+    	content(dir);
     });
 
 	socket.on('disconnect', function() {
