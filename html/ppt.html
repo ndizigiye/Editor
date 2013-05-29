@@ -14,11 +14,13 @@
 
 	function Ppt() {
 
+		console.log(ppt_array);
 		var ppt = $("#pptname").val();
+		console.log(ppt);
 		var name_exists = false;
 
 		for ( var i in ppt_array) {
-			if (ppt_array[i] == game) {
+			if (ppt_array[i] == ppt) {
 				name_exists = true;
 			}
 		}
@@ -35,7 +37,7 @@
 	}
 
 	function verwijder(id) {
-		var dir = './ppt' + id;
+		var dir = './ppt/' + id;
 		socket.emit('delete', dir);
 		$("#" + id).remove();
 		console.log(id);
@@ -55,8 +57,9 @@
 		socket.emit('search','./ppt/', function(ppt) {
 			ppt_array = ppt;
 			$("#loading").hide();
+			$("ul").html("");
 			for ( var i in ppt) {
-				var html = '<a href="/ppt.html?pptid=' + ppt[i] + '">'
+				var html = '<a href="/upload.html?pptid=' + ppt[i] + '">'
 						+ ppt[i] + '</a>';
 				var deletebutton = '<button id="' + ppt[i] + "del"
 						+ '" class="button_delete" onclick="verwijder(\''

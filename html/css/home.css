@@ -137,7 +137,7 @@ h4{
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
-#new_game{
+#new_game,#new_ppt {
 	display:none;
 	margin: 20px 0px 0px 200px;
 	color: #333333; font-family : Tahoma, Geneva, sans-serif;

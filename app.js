@@ -80,6 +80,10 @@ io.sockets.on('connection', function(socket) {
     	
     });
     
+    socket.on('ppt', function(id){
+    	makeDir('./ppt/'+id);
+    });
+    
     socket.on('save',function(path,html){
     	writeFile(path, html);
     	console.log(path+ " ..."+html);
