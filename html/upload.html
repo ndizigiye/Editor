@@ -2,14 +2,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>Presentaties</title>
+<script>
+	var socket = io.connect("http://" + window.location.host + "/");
+
+	$(document).ready(function() {
+		var param = window.location.search.replace("?", "");
+		param = param.split("=");
+		pptid = param[1];
+		$("#dir").val(pptid);
+	});
+	
+	socket.on('show_image',function(image){
+		
+		console.log(image);
+		
+		for(var i in images){
+			
+			$("#images").append("<img src="+images[i]+"/>");
+		}
+		
+	});
+</script>
 </head>
-<body>
+
 <form method="post" enctype="multipart/form-data" action="/file-upload">
-    <input type="file" name="images" multiple>
-    <input type="submit">
+	<input style="display: block" type="text" id="dir" name="dir" value="">
+	<input type="file" name="images" multiple> <input type="submit">
 </form>
-<div id="images">
-</div>
+<div id="images"></div>
 </body>
 </html>

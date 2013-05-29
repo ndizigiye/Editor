@@ -17,18 +17,11 @@ var io = require('socket.io').listen(server);
 
 server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname+'/html/'));
+app.use(express.static(__dirname+'/ppt/'));
 app.use(express.static(__dirname+'/client_lib/'));
 app.use(express.static(__dirname+'/Games/'));
 app.use(express.bodyParser());
 
-app.post('/file-upload', function(req, res, next) {
-	
-	var images = req.files.images;
-	for (var i in images){
-		console.log(images[i].path +" "+images[i].name );
-	}
-    
-});
 
 function writeFile(location,content){
 	fs.writeFile(location, content, function(err) {
@@ -55,6 +48,7 @@ function removeDir(path){
 
 
 io.sockets.on('connection', function(socket) {
+	
 	//fake a new login to initiate the database
 	//
 	//
@@ -63,6 +57,26 @@ io.sockets.on('connection', function(socket) {
 	//
 	//
 	//
+	app.post('/file-upload', function(req, res, next) {
+		
+		var images = req.files.images;
+		var pptDir = req.body.dir+"/";
+		var imgSrc = [];
+		
+		for (var i in images){
+			var content = fs.readFileSync(images[i].path);
+			var name = images[i].name;
+			var newPath = "./ppt/"+pptDir+name;
+			imgSrc[i] = "/ppt/"+pptDir+name;
+			
+			console.log(name+" "+newPath);
+			writeFile(newPath,content);
+		}
+		
+		socket.emit('show_image',imgSrc);
+		console.log('emitted');
+	});
+	
     socket.on('open', function(type,data){
         socket.broadcast.emit('open',type,data);
     });
