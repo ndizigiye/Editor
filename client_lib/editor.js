@@ -159,9 +159,10 @@
 					var value = $("select option:selected").val();
 					if (value == "youtube") {
 						$("#url").show();
+						$("#dia").hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
-					} else {
+					} else if(value == "text"){
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").show(); }
 					    else{
@@ -171,6 +172,15 @@
 						});
 					    }
 						$("#url").hide();
+						$("#dia").hide();
+						
+					}
+					
+					else{
+						$("#dia").show();
+						$("#url").hide();
+						var editor = CKEDITOR.instances['msgpost'];
+					    if (editor) { $("#cke_msgpost").hide(); }
 						
 					}
 				}).trigger('change');

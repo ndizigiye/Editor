@@ -30,7 +30,7 @@
 		socket.emit('search','./ppt/'+pptid,function(images)
 		{
 			for (var i in images){
-				$("#images").append("<img src='"+pptid+"/"+images[i]+"'/>");
+				$("#images").append("<img style=\"width:300px;padding:10px;border-style:solid;border-width:2px;\" src='"+pptid+"/"+images[i]+"'/>");
 			}
 		});
 	}
