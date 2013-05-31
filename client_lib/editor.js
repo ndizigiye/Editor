@@ -156,7 +156,7 @@
 	}
 	
 	function openPpt(){
-		$("#images").html = "";
+		$("#images").empty();
 		var pptid = $("#ppts").val();
 		socket.emit('search','./ppt/'+pptid,function(images)
 				{
@@ -169,9 +169,8 @@
 	
 	function chooseImg(image_id){
 		
-		$("#dia_url").val(image_id);
-		$( "#images" ).dialog("close");
-		alert(image_id);
+		$("#dia_value").val(image_id);
+		$( "#images" ).dialog("destroy");
 	}
 
 	$(document).ready(
