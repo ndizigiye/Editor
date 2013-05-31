@@ -156,14 +156,22 @@
 	}
 	
 	function openPpt(){
+		$("#images").html = "";
 		var pptid = $("#ppts").val();
 		socket.emit('search','./ppt/'+pptid,function(images)
 				{
 					for (var i in images){
-						$("#images").append("<img style=\"width:300px;padding:10px;margin:10px;border-style:solid;border-width:2px;\" src='"+pptid+"/"+images[i]+"'/>");
+						$("#images").append("<img onclick=\"chooseImg(this.src)\" style=\"width:300px;padding:10px;margin:10px;border-style:solid;border-width:2px;\" src='"+pptid+"/"+images[i]+"'/>");
 					}
 				});
 		$( "#images" ).dialog({ width: 1000});
+	}
+	
+	function chooseImg(image_id){
+		
+		$("#dia_url").val(image_id);
+		$( "#images" ).dialog("close");
+		alert(image_id);
 	}
 
 	$(document).ready(
