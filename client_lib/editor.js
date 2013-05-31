@@ -57,6 +57,11 @@
 		iframe.src = iframe.src;
 	}
 	
+	/**
+	 * Insert a div into monitor html
+	 * @param id the button id
+	 * @param editorContent the content to insert into monitor.html
+	 */
 	function addMonitorText(id,editorContent){
 		var html = new Html();
 		var content = html.addDiv(id,editorContent);
@@ -65,6 +70,11 @@
 		save();
 	}
 	
+	/**
+	 * Retrieve name,type and content
+	 * @param id
+	 * @returns {Array}
+	 */
 	function getButtonProperties(id){
 		var name = $("#mobile").contents().find("#"+id).text();
 		name = $.trim(name);
@@ -80,12 +90,19 @@
 		return properties;
 	}
 	
+	/**
+	 * Insert existing text to edit
+	 * @param id
+	 */
 	function insertIntoEditor(id){
 		var html = $('#monitor').contents().find("#" + id).html();
 		html = $.trim(html);
 		$('#msgpost').html(html);
 	}
-
+	
+	/**
+	 * Edit button properties
+	 */
 	function edit() {
 		var selected = $("select option:selected").val();
 		var id = $("#id").val();
@@ -117,6 +134,25 @@
 		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();
 		$( "#dialog" ).dialog( "close" );
+	}
+	
+	/**
+	 * Search available presentations and add it to options to choose from
+	 * @returns {Array} available presentations
+	 */
+	function searchPpt() {
+		var ppt_array = [];
+		socket.emit('search','./ppt/', function(ppt) {
+			ppt_array= ppt;
+			
+			for(var i in ppt_array){
+				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
+				$("#ppts").append(option);
+			}
+			
+		});
+	
+		return ppt_array;
 	}
 
 	$(document).ready(
