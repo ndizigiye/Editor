@@ -100,7 +100,7 @@
 			var content = $("#url_value").val();
 			$('#mobile').contents().find("#" + id).attr("onclick",
 					"emitter('youtube','" + content + "')");
-		} else {
+		} else if(selected == "text") {
 			var editor1 = CKEDITOR.instances['msgpost'];
 			var editorContent = editor1.getData();
 			var content = "#" + id;
@@ -108,6 +108,11 @@
 			addMonitorText(id, editorContent);
 			$('#mobile').contents().find("#" + id).attr("onclick",
 					"emitter('text','" + content + "')");
+		}
+		else{
+			var content = $("#dia_value").val();
+			$('#mobile').contents().find("#" + id).attr("onclick",
+			"emitter('dia','" +content + "')");
 		}
 		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();
@@ -135,12 +140,23 @@
 											var editor = CKEDITOR.instances['msgpost'];
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
+											$("#dia").hide();
 											$("#url").show();
 											$("#url_value").val(properties[2]);
+										}
+										
+										else if(properties[1] == "dia"){
+											var editor = CKEDITOR.instances['msgpost'];
+											if (editor) { editor.destroy(true); }
+											$("#msgpost").hide();
+											$("#url").hide();
+											$("#dia").show();
+											$("#dia_value").val(properties[2]);
 										}
 										else{
 											insertIntoEditor(this.id);
 											$("#url").hide();
+											$("#dia").hide();
 										}
 										$("select").val(properties[1]);
 										$( "#dialog" ).dialog({ width: 750});
