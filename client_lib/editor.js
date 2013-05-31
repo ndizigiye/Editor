@@ -154,6 +154,11 @@
 	
 		return ppt_array;
 	}
+	
+	function openPpt(){
+		var ppt = $("#ppts").val();
+		alert(ppt);
+	}
 
 	$(document).ready(
 			function() {
