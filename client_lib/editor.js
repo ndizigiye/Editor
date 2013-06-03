@@ -47,7 +47,7 @@
 		var name = "button_" + buttonid;
 		var button = html.addButton(name, 'youtube',
 				'https://www.youtube.com/watch?v=f_SnZubaArM');
-		$('#mobile').contents().find('body').append(button);
+		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
 	}
