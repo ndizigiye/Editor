@@ -234,7 +234,8 @@
 									});
 							$("#mobile").contents().find(".buttondel").bind(
 									"click", function(e) {
-										$(this).parent().prev().remove();
+										//$(this).parent().prev().remove();
+										$("#mobile").contents().find(".ui-loader").remove();
 										$(this).parent().remove();
 										save();
 									});
