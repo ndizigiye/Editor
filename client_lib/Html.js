@@ -94,7 +94,7 @@ Html.prototype.addPresentationButton = function(name,data) {
 	var html =  '<div data-role="controlgroup" data-type="horizontal" class="ui-corner-all ui-controlgroup ui-controlgroup-horizontal" aria-disabled="false" data-disabled="false" data-shadow="false" data-corners="true" data-exclude-invisible="true" data-mini="false" data-init-selector=":jqmData(role=\'controlgroup\')">'+'\n'
 				+'<div class="ui-controlgroup-controls">'+'\n'
 				+'<a href="#" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-first-child ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">P</span></span></a>'+'\n'
-				+'<a href="#" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-first-child ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">Open</span></span></a>'+'\n'
+				+'<a href="#" id="'+name+'" data-role="button" onclick="emitter(\'presentation\',\''+data+'\')" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-first-child ui-btn-up-c buttons"><span class="ui-btn-inner"><span class="ui-btn-text">'+name+'</span></span></a>'+'\n'
 				+'<a href="#" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-first-child ui-btn-up-c"><span class="ui-btn-inner"><span class="ui-btn-text">N</span></span></a>'+'\n'
 				+'</div>'+'\n'
 				+'</div>'+'\n'
