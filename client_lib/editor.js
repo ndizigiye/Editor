@@ -51,6 +51,23 @@
 		save();
 		setTimeout('reload("mobile")', 100);
 	}
+	
+	function addButtonPresentation() {
+		var html = new Html();
+		var latestbuttonID = $("#mobile").contents().find(".buttons").last().attr('id');
+		if (latestbuttonID !== undefined){
+		var latestbuttonNumber = latestbuttonID.split("_");
+		var buttonid  = parseInt(latestbuttonNumber[1]) + 1;
+		}
+		else{
+         var buttonid = 1;
+		}
+		var name = "button_" + buttonid;
+		var button = html.addPresentationButton(name,'http://localhost:8080/Test/');
+		$('#mobile').contents().find('body').append(button);
+		save();
+		setTimeout('reload("mobile")', 100);
+	}
 
 	function reload(iframeid) {
 		var iframe = document.getElementById(iframeid);
