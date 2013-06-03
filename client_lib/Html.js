@@ -57,7 +57,7 @@ Html.prototype.addJs = function() {
 Html.prototype.addListener = function() {
 	var html = '<script>'+'\n'
 				+'socket.on("open",function(type,data){'+'\n'
-				+'if (type == "youtube" || type == "text"){'+'\n'
+				+'if (type == "youtube" || type == "text" || type == "dia" || type == "presentation"){'+'\n'
 				+'$.prettyPhoto.open(data,"test","test");'+'\n'
 				+'}'+'\n'
 				+'else if(type == "close"){'+'\n'

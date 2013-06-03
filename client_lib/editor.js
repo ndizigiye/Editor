@@ -63,7 +63,7 @@
          var buttonid = 1;
 		}
 		var name = "button_" + buttonid;
-		var button = html.addPresentationButton(name,'http://localhost:8080/Test/');
+		var button = html.addPresentationButton(name,'http://localhost:8080/Test/img1');
 		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
@@ -75,7 +75,6 @@
 	}
 	
 	/**
-	 * Insert a div into monitor html
 	 * @param id the button id
 	 * @param editorContent the content to insert into monitor.html
 	 */
