@@ -102,7 +102,8 @@
 		
 		var url_content = $("#url").html();
 		var text_content = $("#textarea").html();
-
+		
+		console.log(properties[1]);
 		return properties;
 	}
 	
@@ -241,7 +242,7 @@
 											$("#url").hide();
 											$("#dia").hide();
 										}
-										$("select").val(properties[1]);
+										$("#type").val(properties[1]);
 										$( "#dialog" ).dialog({ width: 750});
 									});
 							$("#mobile").contents().find(".buttondel").bind(
