@@ -121,7 +121,7 @@
 	 * Edit button properties
 	 */
 	function edit() {
-		var selected = $("select option:selected").val();
+		var selected = $("#type option:selected").val();
 		var id = $("#id").val();
 		var title = $("#name").val();
 		var mobile_title = '<span class="ui-btn-inner">'+'\n'
@@ -171,7 +171,8 @@
 			for(var i in ppt_array){
 				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
 				$("#ppts").append(option);
-				$("#presentation").append(option);
+				$("#presentations").append(option);
+				console.log(option);
 			}
 			
 		});
