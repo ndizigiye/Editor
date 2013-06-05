@@ -102,8 +102,7 @@
 		
 		var url_content = $("#url").html();
 		var text_content = $("#textarea").html();
-		
-		console.log(properties[1]);
+
 		return properties;
 	}
 	
@@ -149,7 +148,7 @@
 			"emitter('dia','" +content + "')");
 		}
 		else{
-			var presentationid = $("#presentation").val();
+			var presentationid = $("#presentations").val();
 			var content = "http://" + window.location.host +presentationid;
 			$('#mobile').contents().find("#" + id).attr("onclick",
 			"emitter('presentation','" +presentationid + "')");
@@ -172,7 +171,6 @@
 				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
 				$("#ppts").append(option);
 				$("#presentations").append(option);
-				console.log(option);
 			}
 			
 		});
@@ -237,8 +235,7 @@
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
-											searchPpt();
-											$("#presentation").val(properties[2]);
+											$("#presentations").val(properties[2]);
 											$("#dia").hide();
 											$("#ppt").show();
 										}
