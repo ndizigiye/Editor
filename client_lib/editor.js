@@ -223,14 +223,13 @@
 											$("#dia").show();
 											$("#dia_value").val(properties[2]);
 										}
-										else if(properties[1] == "dia"){
+										else if(properties[1] == "presentation"){
 											var editor = CKEDITOR.instances['msgpost'];
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
 											$("#dia").hide();
 											$("#ppt").show();
-											$("#dia_value").val(properties[2]);
 										}
 										else{
 											insertIntoEditor(this.id);
