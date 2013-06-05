@@ -63,7 +63,7 @@
          var buttonid = 1;
 		}
 		var name = "button_" + buttonid;
-		var button = html.addPresentationButton(name,'http://localhost:8080/Test/img0.jpg');
+		var button = html.addPresentationButton(name,'Test');
 		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
