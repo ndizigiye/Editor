@@ -163,7 +163,7 @@
 			
 			for(var i in ppt_array){
 				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
-				$("#ppts").append(option);
+				$(".ppts").append(option);
 			}
 			
 		});
@@ -173,7 +173,7 @@
 	
 	function openPpt(){
 		$("#images").empty();
-		var pptid = $("#ppts").val();
+		var pptid = $(".ppts").val();
 		socket.emit('search','./ppt/'+pptid,function(images)
 				{
 					for (var i in images){
@@ -241,7 +241,6 @@
 						});
 				$("select").change(function() {
 					
-					var url_content = $("#url").html();
 					var text_content = $("#textarea").html();
 					var value = $("select option:selected").val();
 					if (value == "youtube") {

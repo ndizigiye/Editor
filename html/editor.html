@@ -26,7 +26,7 @@
 		
 		<div id="add_button">
 		<button class="button_create" onclick="add('button')"><b>+</b> Add button</button>
-		<button class="button_create" onclick="addButtonPresentation()"><b>+</b> Add button group</button>
+		<button class="button_create" onclick="addButtonPresentation()"><b>+</b> Add presentation button</button>
 		</div>
 		
 		<iframe id="mobile" src=""></iframe>
@@ -48,9 +48,13 @@
 			Url: <input id="url_value" class="nice-input-url" name="url">
 			</div><br>
 			<div id="dia" style="display:none">
-			Ppt: <select class="nice-input" id="ppts">
+			Ppt: <select class="nice-input ppts">
 				</select> <button class="button_create" onclick="openPpt()">Go</button><br><br>
 			Dia: <input id="dia_value" class="nice-input-url" name="url">
+			</div><br>
+			<div id="ppt" style="display:none">
+			Ppt: <select class="nice-input ppts">
+				</select><br><br>
 			</div><br>
 			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea><br><br>
 			<button class="button_create" onclick="edit()">Save</button>
