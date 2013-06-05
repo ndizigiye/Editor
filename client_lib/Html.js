@@ -57,11 +57,15 @@ Html.prototype.addJs = function() {
 Html.prototype.addListener = function() {
 	var html = '<script>'+'\n'
 				+'socket.on("open",function(type,data){'+'\n'
-				+'if (type == "youtube" || type == "text" || type == "dia" || type == "presentation"){'+'\n'
+				+'if (type == "youtube" || type == "text" || type == "dia"){'+'\n'
 				+'$.prettyPhoto.open(data,"test","test");'+'\n'
 				+'}'+'\n'
 				+'else if(type == "close"){'+'\n'
 				+'$.prettyPhoto.close();'+'\n'
+				+'}'+'\n'
+				+'else if(type == "presentation"){'+'\n'
+				+'var img = "http://" + window.location.host + data;'
+				+'$.prettyPhoto.open(img,"test","test");'+'\n'
 				+'}'+'\n'
 				+'});'+'\n'
 				+'</script>'+'\n';
