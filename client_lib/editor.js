@@ -149,10 +149,10 @@
 			"emitter('dia','" +content + "')");
 		}
 		else{
-			var presentation = $(".ppts").val();
-			var content = "http://" + window.location.host +presentation;
+			var presentationid = $("#presentation").val();
+			var content = "http://" + window.location.host +presentationid;
 			$('#mobile').contents().find("#" + id).attr("onclick",
-			"emitter('presentation','" +content + "')");
+			"emitter('presentation','" +presentationid + "')");
 		}
 		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();
@@ -170,7 +170,8 @@
 			
 			for(var i in ppt_array){
 				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
-				$(".ppts").append(option);
+				$("#ppts").append(option);
+				$("#presentation").append(option);
 			}
 			
 		});
@@ -235,7 +236,8 @@
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
-											$("#dia_value").val();
+											searchPpt();
+											$("#presentation").val(properties[2]);
 											$("#dia").hide();
 											$("#ppt").show();
 										}
