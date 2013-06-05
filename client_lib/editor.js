@@ -231,6 +231,7 @@
 											$("#dia_value").val(properties[2]);
 										}
 										else if(properties[1] == "presentation"){
+											$('#type').prop('disabled', 'disabled');
 											var editor = CKEDITOR.instances['msgpost'];
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
@@ -262,6 +263,7 @@
 					if (value == "youtube") {
 						$("#url").show();
 						$("#dia").hide();
+						$("#ppt").hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
 					} else if(value == "text"){
@@ -275,15 +277,24 @@
 					    }
 						$("#url").hide();
 						$("#dia").hide();
+						$("#ppt").hide();
 						
 					}
 					
-					else{
+					else if(value == "dia"){
 						$("#dia").show();
+						$("#ppt").hide();
 						$("#url").hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
-						
+					}
+					else{
+						$('#type').prop('disabled', 'disabled');
+						$("#ppt").show();
+						$("#dia").hide();
+						$("#url").hide();
+						var editor = CKEDITOR.instances['msgpost'];
+					    if (editor) { $("#cke_msgpost").hide(); }
 					}
 				}).trigger('change');
 				
