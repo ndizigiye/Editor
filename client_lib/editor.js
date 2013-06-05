@@ -149,7 +149,8 @@
 			"emitter('dia','" +content + "')");
 		}
 		else{
-			var content = $(".ppts").val();
+			var presentation = $(".ppts").val();
+			var content = "http://" + window.location.host +presentation;
 			$('#mobile').contents().find("#" + id).attr("onclick",
 			"emitter('presentation','" +content + "')");
 		}
@@ -234,6 +235,7 @@
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
+											$("#dia_value").val();
 											$("#dia").hide();
 											$("#ppt").show();
 										}
@@ -253,7 +255,7 @@
 										save();
 									});
 						});
-				$("select").change(function() {
+				$("#type").change(function() {
 					
 					var text_content = $("#textarea").html();
 					var value = $("select option:selected").val();
