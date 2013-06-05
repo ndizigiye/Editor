@@ -142,10 +142,15 @@
 			$('#mobile').contents().find("#" + id).attr("onclick",
 					"emitter('text','" + content + "')");
 		}
-		else{
+		else if(selected == "dia"){
 			var content = $("#dia_value").val();
 			$('#mobile').contents().find("#" + id).attr("onclick",
 			"emitter('dia','" +content + "')");
+		}
+		else{
+			var content = $(".ppts").val();
+			$('#mobile').contents().find("#" + id).attr("onclick",
+			"emitter('presentation','" +content + "')");
 		}
 		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();
