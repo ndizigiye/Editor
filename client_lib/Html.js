@@ -64,7 +64,7 @@ Html.prototype.addListener = function() {
 				+'$.prettyPhoto.close();'+'\n'
 				+'}'+'\n'
 				+'else if(type == "presentation"){'+'\n'
-				+'var img = "http://" + window.location.host + data;'
+				+'var img = "http://" + window.location.host+"/"+ data+"img0.jpg";'+'\n'
 				+'$.prettyPhoto.open(img,"test","test");'+'\n'
 				+'}'+'\n'
 				+'});'+'\n'
