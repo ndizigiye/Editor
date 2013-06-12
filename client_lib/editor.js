@@ -195,6 +195,11 @@
 		$("#dia_value").val(image_id);
 		$( "#images" ).dialog("destroy");
 	}
+	
+	function setPresentation(){
+		
+	}
+	
 
 	$(document).ready(
 			function() {

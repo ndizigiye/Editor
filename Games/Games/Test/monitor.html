@@ -2,8 +2,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/prettyphoto/prettyphoto.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css">
 <link rel="stylesheet" type="text/css" href="/prettyphoto/prettyphoto.css">
 <style>
 .buttongroup {
@@ -14,15 +12,28 @@ position: absolute;
 top: -15px;
 left: z-index:1;
 }
+html { 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 </style><title></title></head>
-<body class="ui-mobile-viewport ui-overlay-c" style="" data-twttr-rendered="true"><div data-role="page" data-url="/Games/Test/monitor.html" tabindex="0" class="ui-page ui-body-c ui-page-active" style="min-height: 600px;">
+<body >
 <script>
 var socket = io.connect("http://" + window.location.host + "/");
  $(document).ready(function(){
 $("a[rel^='prettyPhoto']").prettyPhoto({
 default_width: 1000,
 default_height: 900,
- });});
+ });
+ 
+ $('body').css("background-image","url(/Test/img0.jpg)");
+ $('html').css("-webkit-background-size","cover");
+ $('html').css("-moz-background-size","cover");
+ $('html').css("-o-background-size","cover");
+ $('html').css("background-size","cover");
+ });
 </script><script>
 socket.on("open",function(type,data){
 if (type == "youtube" || type == "text" || type == "dia"){
@@ -45,7 +56,8 @@ else if(type == "change_image"){
 	$.prettyPhoto.open(img,"test","test");
 }
 });
+
+
 </script>
 
-
-</div><div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span><h1>loading</h1></div><div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span><h1>loading</h1></div> 					<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon ui-icon-loading"></span><h1>loading</h1></div></body></html>
+</body></html>

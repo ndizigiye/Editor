@@ -27,10 +27,17 @@ body{
 	border-radius: 11px;
 }
 
-#add_button{
+#add_button_mobile{
 	position: absolute;
     top: 88px;
     left:65px;
+	
+}
+
+#add_button_monitor{
+	position: absolute;
+    top: 88px;
+    right:110px;
 	
 }
 
