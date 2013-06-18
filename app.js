@@ -4,6 +4,8 @@ var fs = require('fs');
 var User = require("./client_lib/user.js").User;
 var Login = require("./lib/login.js").Login;
 var Html = require("./client_lib/Html.js").Html;
+var Html_monitor = require("./client_lib/Html_monitor.js").Html;
+var Html_mobile = require("./client_lib/Html_mobile.js").Html;
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
@@ -83,11 +85,12 @@ io.sockets.on('connection', function(socket) {
     	
     	makeDir('./Games/Games/'+id);
     	
-    	var mobile_html = new Html();
-    	var monitor_html = new Html();
+    	var mobile_html = new Html_mobile();
+    	var monitor_html = new Html_monitor();
+    	var html = new Html();
     	
     	var mobilehtml = mobile_html.addHeader() + mobile_html.addJs()+mobile_html.addEmitter()+ mobile_html.addFooter();
-    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+ monitor_html.addFooter();
+    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+html.addDiv("ppt_id"," ")+ monitor_html.addFooter();
     	
     	var mobile_location = './Games/Games/'+id+'/index.html';
     	var monitor_location = './Games/Games/'+id+'/monitor.html';

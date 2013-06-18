@@ -12,14 +12,14 @@ position: absolute;
 top: -15px;
 left: z-index:1;
 }
-html { 
+body { 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 </style><title></title></head>
-<body >
+<body style="background-image: url(http://localhost:8080/Test/img0.jpg);">
 <script>
 var socket = io.connect("http://" + window.location.host + "/");
  $(document).ready(function(){
@@ -27,12 +27,7 @@ $("a[rel^='prettyPhoto']").prettyPhoto({
 default_width: 1000,
 default_height: 900,
  });
- 
  $('body').css("background-image","url(/Test/img0.jpg)");
- $('html').css("-webkit-background-size","cover");
- $('html').css("-moz-background-size","cover");
- $('html').css("-o-background-size","cover");
- $('html').css("background-size","cover");
  });
 </script><script>
 socket.on("open",function(type,data){
