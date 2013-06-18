@@ -28,7 +28,7 @@ app.use(express.bodyParser());
 function writeFile(location,content){
 	fs.writeFile(location, content, function(err) {
 		if (err)
-			console.log(err);
+			 console.log(err);
 		console.log('file saved!');
 	});
 }
