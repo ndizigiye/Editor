@@ -31,8 +31,15 @@ Html.prototype.addPresentationButton = function(name,data) {
 
 };
 
-Html.prototype.addDiv = function(id,content) {
-	var start = '<div id="'+id+'">';
+Html.prototype.addDiv = function(id,content,style) {
+	
+	if(style){
+		var start = '<div id="'+id+'" style="'+style+'">';
+	}
+	else{
+		var start = '<div id="'+id+'">';
+	}
+	
 	var close = '</div>';
 	var html = start+'\n'+content+'\n'+close+'\n';
 	return html;

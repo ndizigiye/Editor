@@ -16,7 +16,7 @@
 </head>
 <script>
 
-</script>
+</script> 
 <body class="yui-skin-sam" onload="initiate();searchPpt();">
 	<div id="wrap">
 		<div id="add">
@@ -58,9 +58,15 @@
 			Dia: <input id="dia_value" class="nice-input-url" name="url">
 			</div><br>
 			<div id="ppt" style="display:none">
-			Ppt: <select class="nice-input" id="presentations">
+			Choose presentation: <select class="nice-input" id="presentations">
 				</select><br><br>
 			</div><br>
+			<div id="setppt">
+			Choose presentation: <select class="nice-input" id="presentations1">
+				</select><br><br>
+			Tijd tussen dia (in sec) : <input id="dia_timer" size="2"  name="dia_timer">sec<br><br>
+			<button class="button_create" onclick="saveMonitorConfig()">Opslaan</button><br>
+			</div>
 			<textarea name="msgpost" id="msgpost" cols="50" rows="10"></textarea><br><br>
 			<button class="button_create" onclick="edit()">Save</button>
 	</div>

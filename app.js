@@ -90,7 +90,7 @@ io.sockets.on('connection', function(socket) {
     	var html = new Html();
     	
     	var mobilehtml = mobile_html.addHeader() + mobile_html.addJs()+mobile_html.addEmitter()+ mobile_html.addFooter();
-    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+html.addDiv("ppt_id"," ")+ monitor_html.addFooter();
+    	var monitorhtml = monitor_html.addHeader() + monitor_html.addJs()+monitor_html.addListener()+html.addDiv("configs","","display:none")+ monitor_html.addFooter();
     	
     	var mobile_location = './Games/Games/'+id+'/index.html';
     	var monitor_location = './Games/Games/'+id+'/monitor.html';

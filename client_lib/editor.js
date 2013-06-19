@@ -171,6 +171,7 @@
 				var option = "<option value=\""+ppt_array[i]+"\">"+ppt_array[i]+"</option>";
 				$("#ppts").append(option);
 				$("#presentations").append(option);
+				$("#presentations1").append(option);
 			}
 			
 		});
@@ -196,13 +197,27 @@
 		$( "#images" ).dialog("destroy");
 	}
 	
+	/**
+	 * Open the dialog to set the monitor configurations
+	 */
 	function setPresentation(){
-		
+		$( "#setppt" ).dialog();
 	}
-	
+	/**
+	 * Set the monitor configurations
+	 * @returns void
+	 */
+	function saveMonitorConfig(){
+		var presentation = $("#presentations1").val();
+		var dia_timer = $("#dia_timer").val();
+		$("#monitor").contents().find("#configs").html("{ \"ppt\":\""+presentation+"\", \"timer\" :"+dia_timer+"}");
+		save();
+		$( "#setppt" ).dialog("close");
+	}
 
 	$(document).ready(
 			function() {
+				// when loading the mobile iframe
 				$("#mobile").load(
 						function() {
 							$("#mobile").contents().find(".buttons").bind(
@@ -261,6 +276,17 @@
 										save();
 									});
 						});
+				
+				//when loading the monitor frame
+				$("#monitor").load(
+						function() {
+							var configs = $("#monitor").contents().find("#configs").html(), json = JSON.parse(configs);
+							var ppt = json.ppt,timer = json.timer;
+							$("#presentations1").val(ppt);
+							$("#dia_timer").val(timer);
+						});
+						
+				
 				$("#type").change(function() {
 					
 					var text_content = $("#textarea").html();
