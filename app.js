@@ -8,7 +8,7 @@ var Html_monitor = require("./client_lib/Html_monitor.js").Html;
 var Html_mobile = require("./client_lib/Html_mobile.js").Html;
 var app = express();
 var http = require('http');
-var server = http.createServer(app); 
+var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 /* End imports */
 
