@@ -48,6 +48,21 @@ function removeDir(path){
 	console.log('directory '+path+' deleted');
 }
 
+function duplicate(source, target,to) {
+	  makeDir('./Games/Games/'+to);
+	  var rd = fs.createReadStream(source);
+	  rd.on("error", function(err) {
+		  console.log('=============readstream is wrong===========');
+	  });
+	  var wr = fs.createWriteStream(target);
+	  wr.on("error", function(err) {
+	    console.log('=============writeStream is wrong===========');
+	  });
+	  wr.on("close", function(ex) {
+	   console.log('=============closing===========');
+	  });
+	  rd.pipe(wr);
+	}
 
 io.sockets.on('connection', function(socket) {
 	
@@ -98,6 +113,18 @@ io.sockets.on('connection', function(socket) {
     	writeFile(mobile_location  , mobilehtml);
     	writeFile(monitor_location  , monitorhtml);
     	
+    });
+    
+    socket.on('duplicate', function(from,to){
+    	console.log('----------duplicate-------------');
+    	var mobile_from =  __dirname+'/Games/Games/'+from+'/index.html';
+    	var monitor_from = __dirname+'/Games/Games/'+from+'/monitor.html';
+    	
+    	var mobile_to =  __dirname+'/Games/Games/'+to+'/index.html';
+    	var monitor_to = __dirname+'/Games/Games/'+to+'/monitor.html';
+    	
+    	duplicate(mobile_from,mobile_to,to);
+    	duplicate(monitor_from,monitor_to,to);
     });
     
     socket.on('ppt', function(id){

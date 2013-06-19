@@ -1,6 +1,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/user.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="/css/home.css">
 <head>
 <meta charset="utf-8" />
@@ -52,6 +55,35 @@
 	function verwijderbutton(id) {
 		$("#" + id).parent().remove();
 	}
+	
+	function showDuplicateDialog(game_id){
+		$('#game_id_tocopy').html(game_id);
+		$("#duplicate_dialog").dialog();
+	}
+	
+	function duplicate(){
+		var from = $('#game_id_tocopy').html();
+		var to = $('#duplicate_name').val();
+		var name_exists = false;
+		
+		for ( var i in games_array) {
+			if (games_array[i] == to) {
+				name_exists = true;
+			}
+		}
+
+		if (to && !name_exists) {
+			socket.emit('duplicate',from,to);
+			window.location.href = "http://" + window.location.host;
+			$("#duplicate_dialog").dialog();
+		} else if (name_exists) {
+			alert('Game already exists!');
+		}
+
+		else {
+			alert('Provide a valid name!');
+		}
+	}
 
 	function searchGames() {
 		socket.emit('search','./Games/Games', function(games) {
@@ -64,7 +96,11 @@
 						+ '" class="button_delete" onclick="verwijder(\''
 						+ games[i]
 						+ '\');verwijderbutton(this.id);">Delete</button>';
-				$("ul").append('<li>' + deletebutton + html + '</li>');
+			   var duplicatebutton = '<button '
+				+ '" class="button_duplicate" onclick="showDuplicateDialog(\''
+				+ games[i]
+				+ '\');">Duplicate</button>';
+				$("ul").append('<li>' + deletebutton+duplicatebutton+ html + '</li>');
 			}
 		});
 	}
@@ -84,6 +120,11 @@
 	</div>
 	<div id ="loading">
 	<img src="/img/loading.gif"/>
+	</div>
+	<div id="duplicate_dialog" style="display:none">
+	<div id="game_id_tocopy"></div>
+	Duplicaat naam : <input id="duplicate_name" name="duplicate_name"><br><br>
+	<button class="button_create" onclick="duplicate()">Opslaan</button><br>
 	</div>
 	<ul>
 	</ul>
