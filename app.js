@@ -8,14 +8,14 @@ var Html_monitor = require("./client_lib/Html_monitor.js").Html;
 var Html_mobile = require("./client_lib/Html_mobile.js").Html;
 var app = express();
 var http = require('http');
-var server = http.createServer(app);
+var server = http.createServer(app); 
 var io = require('socket.io').listen(server);
 /* End imports */
 
 // io.configure(function() {
 // io.set("transports", [ "xhr-polling" ]);
 // io.set("polling duration", 100000);
-// });
+// }); 
 
 server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname+'/html/'));
