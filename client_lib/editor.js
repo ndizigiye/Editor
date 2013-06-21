@@ -20,6 +20,9 @@
 			$('#mobile').attr("src", mobile_url);
 			$('#monitor').attr("src", monitor_url);
 		}
+		
+		$("#mobile_link").html("Mobile link <br><a href='"+mobile_url+"'>"+mobile_url+"</a><br><br>");
+		$("#monitor_link").html("Monitor link <br><a href='"+monitor_url+"'>"+monitor_url+"</a>");
 	}
 
 	function save() {
