@@ -15,9 +15,10 @@ var io = require('socket.io').listen(server);
 // io.configure(function() {
 // io.set("transports", [ "xhr-polling" ]);
 // io.set("polling duration", 100000);
-// }); 
+// });
 
 server.listen(process.env.PORT || 8080);
+console.log(process.env.PORT);
 app.use(express.static(__dirname+'/html/'));
 app.use(express.static(__dirname+'/ppt/'));
 app.use(express.static(__dirname+'/client_lib/'));
@@ -26,37 +27,43 @@ app.use(express.bodyParser());
 
 
 function writeFile(location,content){
-	fs.writeFile(location, content, function(err) {
-		if (err)
-			 console.log(err);
-		console.log('file saved!');
-	});
-}
+	
+		fs.writeFile(location, content, function(err) {
+			if (err) console.log(err);
+			console.log('file saved!');
+		});
+	}
 
 function makeDir(path){
-	fs.mkdir(path, '7777', function() {
-		console.log('directory '+path+' created');
-	});
+	
+		fs.mkdir(path, '7777', function(err) {
+			if (err) console.log(err);
+			console.log('directory '+path+' created');
+		});
+
 }
 
 function removeDir(path){
-	var files = fs.readdirSync(path);
-	for (var i in files ){
+	
+		var files = fs.readdirSync(path);
+		for (var i in files ){
 		fs.unlinkSync(path+"/"+files[i]);
-	}
-	fs.rmdirSync(path);
-	console.log('directory '+path+' deleted');
+		}
+		var rmdir = fs.rmdirSync(path);
+		console.log('directory '+path+' deleted');
+
+
 }
 
 function duplicate(source, target,to) {
 	  makeDir('./Games/Games/'+to);
 	  var rd = fs.createReadStream(source);
 	  rd.on("error", function(err) {
-		  console.log('=============readstream is wrong===========');
+		  console.log('readstream error');
 	  });
 	  var wr = fs.createWriteStream(target);
 	  wr.on("error", function(err) {
-	    console.log('=============writeStream is wrong===========');
+	    console.log('writeStream error');
 	  });
 	  wr.on("close", function(ex) {
 	   console.log('=============closing===========');
@@ -66,7 +73,7 @@ function duplicate(source, target,to) {
 
 io.sockets.on('connection', function(socket) {
 	
-	//fake a new login to initiate the database
+	// fake a new login to initiate the database
 	//
 	//
 	var l = new Login();
@@ -155,8 +162,10 @@ io.sockets.on('connection', function(socket) {
     
     socket.on('search', function(folder,content){
     	var dir = fs.readdirSync(folder);
+
     	console.log("Found"+ dir);
     	content(dir);
+
     });
 
 	socket.on('disconnect', function() {

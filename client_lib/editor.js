@@ -80,7 +80,7 @@
 	 */
 	function addMonitorText(id,editorContent){
 		var html = new Html();
-		var content = html.addDiv(id,editorContent);
+		var content = html.addDiv(id,editorContent,"display:none");
 		$('#monitor').contents().find("#"+id).remove();
 		$('#monitor').contents().find('body').append(content);
 		save();
@@ -181,7 +181,7 @@
 	
 	function openPpt(){
 		$("#images").empty();
-		var pptid = $(".ppts").val();
+		var pptid = $("#ppts").val();
 		socket.emit('search','./ppt/'+pptid,function(images)
 				{
 					for (var i in images){
@@ -212,6 +212,7 @@
 		var dia_timer = $("#dia_timer").val();
 		$("#monitor").contents().find("#configs").html("{ \"ppt\":\""+presentation+"\", \"timer\" :"+dia_timer+"}");
 		save();
+		document.location.reload(true);
 		$( "#setppt" ).dialog("close");
 	}
 
@@ -238,6 +239,7 @@
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#dia").hide();
+											$( "#setppt" ).hide();
 											$("#url").show();
 											$("#url_value").val(properties[2]);
 										}
@@ -247,23 +249,25 @@
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
+											$( "#setppt" ).hide();
 											$("#dia").show();
 											$("#dia_value").val(properties[2]);
 										}
 										else if(properties[1] == "presentation"){
-											$('#type').prop('disabled', 'disabled');
 											var editor = CKEDITOR.instances['msgpost'];
 											if (editor) { editor.destroy(true); }
 											$("#msgpost").hide();
 											$("#url").hide();
 											$("#presentations").val(properties[2]);
 											$("#dia").hide();
+											$( "#setppt" ).hide();
 											$("#ppt").show();
 										}
 										else{
 											insertIntoEditor(this.id);
 											$("#url").hide();
 											$("#dia").hide();
+											$( "#setppt" ).hide();
 										}
 										$("#type").val(properties[1]);
 										$( "#dialog" ).dialog({ width: 750});
@@ -295,6 +299,7 @@
 						$("#url").show();
 						$("#dia").hide();
 						$("#ppt").hide();
+						$( "#setppt" ).hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
 					} else if(value == "text"){
@@ -309,6 +314,7 @@
 						$("#url").hide();
 						$("#dia").hide();
 						$("#ppt").hide();
+						$( "#setppt" ).hide();
 						
 					}
 					
@@ -316,14 +322,15 @@
 						$("#dia").show();
 						$("#ppt").hide();
 						$("#url").hide();
+						$( "#setppt" ).hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
 					}
 					else{
-						$('#type').prop('disabled', 'disabled');
 						$("#ppt").show();
 						$("#dia").hide();
 						$("#url").hide();
+						$( "#setppt" ).hide();
 						var editor = CKEDITOR.instances['msgpost'];
 					    if (editor) { $("#cke_msgpost").hide(); }
 					}
