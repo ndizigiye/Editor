@@ -1,4 +1,4 @@
-<html><head><base href="http://localhost:8080/Games/Test/monitor.html">
+<html><head>
 <script src="/socket.io/socket.io.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/prettyphoto/prettyphoto.js"></script>
@@ -12,47 +12,105 @@ position: absolute;
 top: -15px;
 left: z-index:1;
 }
-body { 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-</style><title></title></head>
-<body style="background-image: url(http://localhost:8080/Test/img0.jpg);">
+body {
+-webkit-background-size: 100% 90%;
+-moz-background-size: 100% 90%;
+-o-background-size: 100% 90%;
+background-size: 90% 90%;
+background-repeat:no-repeat;
+background-position:left bottom;
+}</style></head>
+<body style="background-image: url(http://localhost:8080/Test/img6.jpg);">
+<div id="mobile_url" style="font-family: Gill Sans, Verdana;font-size: 60px;height:10%;margin-top: -9px;">
+______http://tinyurl.com/pnmk5ls
+</div>
 <script>
 var socket = io.connect("http://" + window.location.host + "/");
+var mobiele_url = "===> test <===";
+$('mobile_url').html(mobiele_url);
  $(document).ready(function(){
 $("a[rel^='prettyPhoto']").prettyPhoto({
+social_tools:false,
 default_width: 1000,
 default_height: 900,
  });
- $('body').css("background-image","url(/Test/img0.jpg)");
- });
+makeTinyUrl("http://15.185.95.201:8080/");
+ if(available_presentations().length > 0){
+setBackground();
+}
+else{
+window.setTimeout(setBackground, 2000);
+}
+$("body").css("background-image","url(/Test/img0.jpg)");});
 </script><script>
 socket.on("open",function(type,data){
 if (type == "youtube" || type == "text" || type == "dia"){
-$.prettyPhoto.open(data,"test","test");
+$.prettyPhoto.open(data);
 }
 else if(type == "close"){
 $.prettyPhoto.close();
 }
 else if(type == "presentation"){
 var img = "http://" + window.location.host+"/"+ data+"/img0.jpg";
-$.prettyPhoto.open(img,"test","test");
+$.prettyPhoto.open(img);
 }
 else if(type == "change_image"){
-	var split_data = data.split("_");
-	var presentation_id = split_data[0];
-	var dia_id = split_data[1];
-	var img = "http://" + window.location.host+"/"+ presentation_id+"/"+"img"+dia_id+".jpg";
-	console.log(img);
-	$.prettyPhoto.close();
-	$.prettyPhoto.open(img,"test","test");
+var split_data = data.split("_");
+var presentation_id = split_data[0];
+var dia_id = split_data[1];
+var img = "http://" + window.location.host+"/"+ presentation_id+"/"+"img"+dia_id+".jpg";
+console.log(img);
+$.prettyPhoto.close();
+$.prettyPhoto.open(img);
 }
 });
-
-
+var array = []; // initializing array for @available_presentations
+function available_presentations(){
+var json = JSON.parse($("#configs").html());
+var ppt_name = json.ppt;
+var ppt_dir = './ppt/' + ppt_name;
+socket.emit('search', ppt_dir,
+function(dir) {
+array = dir.sort(function(a,b){
+a = a.split(/(\d+)/g);
+a = parseInt(a[1]);
+b = b.split(/(\d+)/g);
+b = parseInt(b[1]);
+return a-b});
+});
+//console.log(array);
+return array;
+}
+//this set the background according to the given interval
+var i = 0; // i for retrieving the array @available_presentations
+function setBackground() {
+var presentation = available_presentations();
+var json = JSON.parse($("#configs").html());
+var ppt_name = json.ppt;
+var timer = json.timer * 1000; // multiply 1000 for milliseconds
+var ppt_dir = './ppt/' + ppt_name;
+var image_src = '/' + ppt_name + '/' + presentation[i];
+//console.log(image_src);
+$("body").css("background-image","url(" + image_src + ")");
+if(++i == (presentation.length+1))
+{
+i = 0;
+setBackground();
+return;
+} 
+window.setTimeout(setBackground, timer);
+}
+function makeTinyUrl(url)
+{
+    $.getJSON('http://tinyurl.com/api-create.php?url=' + url, 
+    	function(data)
+    	{ 
+    		alert(data.tinyurl); 
+    	}
+    );
+}
 </script>
+<div id="configs" style="display:none">{ "ppt":"Info", "timer" :3}</div>
 
-</body></html>
+
+ 					 					 					</body></html>
