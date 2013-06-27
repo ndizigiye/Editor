@@ -51,6 +51,11 @@ Html.prototype.addJs = function() {
 
 Html.prototype.addEmitter = function() {
 	var html = '<script>'+'\n'
+	+'$(document).ready(function(){'+'\n'
+	+'if(navigator.userAgent.match(/iPad|iPhone|iPod|Android|webOS|BlackBerry|Windows Phone|Opera Mini|IEMobile/i) != null || screen.width <= 480){'+'\n'
+	+'$(".buttondel").hide();'+'\n'
+	+'}'+'\n'
+	+'});'+'\n'
 				+'var game_id = document.URL.split("/",4),game_id = game_id[4];'+'\n'
 				+'function emitter(type,data,gameid){'+'\n'
 				+'socket.emit("open",type,data,gameid);'+'\n'
