@@ -51,8 +51,9 @@ Html.prototype.addJs = function() {
 
 Html.prototype.addEmitter = function() {
 	var html = '<script>'+'\n'
-				+'function emitter(type,data){'+'\n'
-				+'socket.emit("open",type,data);'+'\n'
+				+'var game_id = document.URL.split("/",4),game_id = game_id[4];'+'\n'
+				+'function emitter(type,data,gameid){'+'\n'
+				+'socket.emit("open",type,data,gameid);'+'\n'
 				+'}'+'\n'
 				+'function change_dia(type,element){'+'\n'
 
@@ -62,7 +63,7 @@ Html.prototype.addEmitter = function() {
 				+'	var split_onclick = button_onclick.split("\'");'+'\n'
 				+'	var data = split_onclick[3]+"_"+dia_id;'+'\n'
 				+'	console.log(data);'+'\n'
-				+'	emitter("change_image",data);'+'\n'
+				+'	emitter("change_image",data,game_id);'+'\n'
 				+'}'+'\n'
 				+'else{'+'\n'
 				+'	dia_id++;'+'\n'
@@ -70,7 +71,7 @@ Html.prototype.addEmitter = function() {
 				+'	var split_onclick = button_onclick.split("\'");'+'\n'
 				+'	var data = split_onclick[3]+"_"+dia_id;'+'\n'
 				+'	console.log(data);'+'\n'
-				+'	emitter("change_image",data);'+'\n'
+				+'	emitter("change_image",data,game_id);'+'\n'
 				+'}'+'\n'
 				+'}'+'\n'
 				+'</script>'+'\n';

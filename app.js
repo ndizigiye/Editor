@@ -99,8 +99,8 @@ io.sockets.on('connection', function(socket) {
 		res.send("<script src='http://code.jquery.com/jquery-latest.min.js'></script><script>$(document).ready(function(){history.back();});</script>");
 	});
 	
-    socket.on('open', function(type,data){
-        socket.broadcast.emit('open',type,data);
+    socket.on('open', function(type,data,gameid){
+        socket.broadcast.emit('open',type,data,gameid);
     });
     
     socket.on('game', function(id){

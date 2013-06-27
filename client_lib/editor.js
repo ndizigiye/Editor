@@ -49,7 +49,7 @@
 		}
 		var name = "button_" + buttonid;
 		var button = html.addButton(name, 'youtube',
-				'https://www.youtube.com/watch?v=f_SnZubaArM');
+				'https://www.youtube.com/watch?v=f_SnZubaArM',gameid);
 		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
@@ -66,7 +66,7 @@
          var buttonid = 1;
 		}
 		var name = "button_" + buttonid;
-		var button = html.addPresentationButton(name,'Test');
+		var button = html.addPresentationButton(name,'Test',gameid);
 		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
@@ -135,7 +135,7 @@
 		if (selected == "youtube") {
 			var content = $("#url_value").val();
 			$('#mobile').contents().find("#" + id).attr("onclick",
-					"emitter('youtube','" + content + "')");
+					"emitter('youtube','" + content + "','"+gameid+"')");
 		} else if(selected == "text") {
 			var editor1 = CKEDITOR.instances['msgpost'];
 			var editorContent = editor1.getData();
@@ -143,18 +143,18 @@
 
 			addMonitorText(id, editorContent);
 			$('#mobile').contents().find("#" + id).attr("onclick",
-					"emitter('text','" + content + "')");
+					"emitter('text','" + content + "','"+gameid+"')");
 		}
 		else if(selected == "dia"){
 			var content = $("#dia_value").val();
 			$('#mobile').contents().find("#" + id).attr("onclick",
-			"emitter('dia','" +content + "')");
+			"emitter('dia','" +content + "','"+gameid+"')");
 		}
 		else{
 			var presentationid = $("#presentations").val();
 			var content = "http://" + window.location.host +presentationid;
 			$('#mobile').contents().find("#" + id).attr("onclick",
-			"emitter('presentation','" +presentationid + "')");
+			"emitter('presentation','" +presentationid + "','"+gameid+"')");
 		}
 		$('#mobile').contents().find("#" + id).html(mobile_title);
 		save();

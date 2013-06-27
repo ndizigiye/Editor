@@ -17,10 +17,12 @@ Html.prototype.addHeader = function() {
 	+'left: z-index:1;'+'\n'
 	+'}'+'\n'
 	+'body {'+'\n'
-	+'-webkit-background-size: cover;'+'\n'
-	+'-moz-background-size: cover;'+'\n'
-	+'-o-background-size: cover;'+'\n'
-	+'background-size: cover;'+'\n'
+	+'-webkit-background-size: 90% 90%;'+'\n'
+	+'-moz-background-size: 90% 90%;'+'\n'
+	+'-o-background-size: 90% 90%;'+'\n'
+	+'background-size: 90% 90%;'+'\n'
+	+'background-repeat:no-repeat;'+'\n'
+	+'background-position:left bottom;'+'\n'
 	+'}'
 	+'</style>';
 	
@@ -32,7 +34,9 @@ Html.prototype.addHeader = function() {
 	+'<link rel="stylesheet" type="text/css" href="/prettyphoto/prettyphoto.css">'+'\n'
 	+style
 	+'</head>'+'\n'
-	+'<body>';
+	+'<body>'+'\n'
+	+'<div id="mobile_url" style="font-family: Gill Sans, Verdana;font-size: 60px;height:10%;margin-top: -9px;">'+'\n'
+	+'</div>';
 
 	return html;
 };
@@ -47,12 +51,17 @@ Html.prototype.addFooter = function() {
 Html.prototype.addJs = function() {
 	var html = '\n'+'<script>'+'\n'
 				+'var socket = io.connect("http://" + window.location.host + "/");'+'\n'
+				+'var mobile_url = document.URL.split("/",5);'+'\n'
+				+'mobile_url = mobile_url[0]+"//"+mobile_url[2]+"/"+mobile_url[3]+"/"+mobile_url[4];'+'\n'
 				+' $(document).ready(function(){'+'\n'
 				+'$("a[rel^=\'prettyPhoto\']\").prettyPhoto({'+'\n'
 				+'social_tools:false,'+'\n'
 				+'default_width: 1000,'+'\n'
 				+'default_height: 900,'+'\n'
-				+' });'
+				+' });'+'\n'
+				+'getTinyUrl(mobile_url,function(shorturl){'+'\n'
+				+'$("#mobile_url").html(shorturl);'+'\n'
+				+'});'+'\n'
 				+'if(available_presentations().length > 0){'+'\n'
 				+'setBackground();'+'\n'
 				+'}'+'\n'
@@ -67,7 +76,9 @@ Html.prototype.addJs = function() {
 
 Html.prototype.addListener = function() {
 	var html = '<script>'+'\n'
-				+'socket.on("open",function(type,data){'+'\n'
+				+'var game_id = document.URL.split("/",5),game_id = game_id[4];'+'\n'
+				+'socket.on("open",function(type,data,gameid){'+'\n'
+				+'if(game_id == gameid){'+'\n'
 				+'if (type == "youtube" || type == "text" || type == "dia"){'+'\n'
 				+'$.prettyPhoto.open(data);'+'\n'
 				+'}'+'\n'
@@ -86,6 +97,7 @@ Html.prototype.addListener = function() {
 				+'console.log(img);'+'\n'
 				+'$.prettyPhoto.close();'+'\n'
 				+'$.prettyPhoto.open(img);'+'\n'
+				+'}'+'\n'
 				+'}'+'\n'
 				+'});'+'\n'
 				+'var array = []; // initializing array for @available_presentations'+'\n'
@@ -123,6 +135,14 @@ Html.prototype.addListener = function() {
 				+'return;'+'\n'
 				+'} '+'\n'
 				+'window.setTimeout(setBackground, timer);'+'\n'
+				+'}'+'\n'
+				+'function getTinyUrl(longURL, success) {'+'\n'
+				+'var API = "http://urltinyfy.appspot.com/tinyurl?url=",'+'\n'
+				+'URL = API + encodeURIComponent(longURL) + "&callback=?";'+'\n'
+				+'$.getJSON(URL, function(data){'+'\n'
+				+'console.log(data);'+'\n'
+				+'success && success(data.tinyurl);'+'\n'
+				+'});'+'\n'
 				+'}'+'\n'
 				+'</script>'+'\n';
 	return html;
