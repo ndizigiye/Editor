@@ -22,7 +22,7 @@
 		}
 		
 		$("#mobile_link").html("Mobile link <br><a href='"+mobile_url+"'>"+mobile_url+"</a><br><br>");
-		$("#monitor_link").html("Monitor link <br><a href='"+monitor_url+"'>"+monitor_url+"</a>");
+		$("#monitor_link").html("Monitor link <br><a href='"+monitor_url+"'>"+monitor_url+"</a><br><br>");
 	}
 
 	function save() {
@@ -53,6 +53,14 @@
 		$('#mobile').contents().find('div').first().append(button);
 		save();
 		setTimeout('reload("mobile")', 100);
+	}
+	
+	function addCloseButton(){
+		if(!$('#mobile').contents().find('#close').length){
+		var html = new Html();
+		$('#mobile').contents().find('body').prepend(html.addCloseButton(gameid));
+		console.log('close added');
+		}
 	}
 	
 	function addButtonPresentation() {

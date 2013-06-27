@@ -29,7 +29,13 @@ Html.prototype.addHeader = function() {
 	+'<link rel="stylesheet" type="text/css" href="/prettyphoto/prettyphoto.css">'+'\n'
 	+style
 	+'</head>'+'\n'
-	+'<body>';
+	+'<body>'+'\n'
+	+' <div class="buttongroup">'+'\n'
+ +'<a href="#" id="close" data-role="button" onclick="emitter(\'close\',\'\',game_id)" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c closebutton">'+'\n'
++'<span class="ui-btn-inner">'+'\n'
++'<span class="ui-btn-text">Sluiten</span>'+'\n'
++'</span></a>'+'\n'
++'</div>';
 
 	return html;
 };
@@ -57,9 +63,9 @@ Html.prototype.addEmitter = function() {
 	+'$(".buttondel").hide();'+'\n'
 	+'}'+'\n'
 	+'});'+'\n'
-				+'var game_id = document.URL.split("/",4),game_id = game_id[4];'+'\n'
+				+'var game_id = document.URL.split("/",5),game_id = game_id[4];'+'\n'
 				+'function emitter(type,data,gameid){'+'\n'
-				+'socket.emit("open",type,data,gameid);'+'\n'
+				+'socket.emit("open",type,data,game_id);'+'\n'
 				+'}'+'\n'
 				+'function change_dia(type,element){'+'\n'
 
