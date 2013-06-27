@@ -20,7 +20,7 @@ Html.prototype.addHeader = function() {
 	
 	var html = '<html>'+'\n'
 	+'<head>'+'\n'
-	+'<meta  name="viewport" content="width=device-width, initial-scale=1.5, maximum-scale=1.5, user-scalable=0" />'+'\n'
+	+'<meta  name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />'+'\n'
 	+'<script src="/socket.io/socket.io.js"></script>'+'\n'
 	+'<script src="http://code.jquery.com/jquery-latest.min.js"></script>'+'\n'
 	+'<script src="/prettyphoto/prettyphoto.js"></script>'+'\n'
